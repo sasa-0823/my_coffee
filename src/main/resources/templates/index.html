@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/header.css">
+  <title>ホーム/MyCoffee</title>
+</head>
+
+<body>
+  <header>
+    <div class="menu">
+      <ul>
+        <li class="active"><a th:href="@{/}">logo</a></li>
+        <li>
+          <form type="search" method="get" action="#" th:object="${search_Form}">
+            <input type="text" th:field="*{search}" name="bean_search">
+            <button class="btn">検索</button>
+          </form>
+        </li>
+        <li>アイコン
+          <div class="sub_menu">
+            <ul>
+              <li><a th:href="#">マイページ</a></li>
+              <li><a th:href="#">ブックマーク</a></li>
+              <li><a th:href="@{/logout}"
+                  onclick="event.preventDefault(); document.getElementById(logout-form).submit();">ログアウト
+                </a>
+                <form id="logout-form" th:action="@{/logout}" method="post"></form>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a href="#">レシピ追加</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <h3>ユーザー名</h3>
+    <h3 th:text="${ユーザー名}">○○様</h3>
+
+    <h5>【recipe一覧】</h5>
+
+    <div class="menu_list">
+      <ul>
+        <li>
+          <img src="ユーザー画像.jpg" alt="ユーザーアイコン">
+          <span>豆の名前</span>
+          <span>豆の量</span>
+          <span>水の量</span>
+          <span>水温</span>
+          <input type="button" value="編集">
+          <input type="button" value="削除">
+        </li>
+      </ul>
+    </div>
+  </main>
+</body>
+
+</html>
