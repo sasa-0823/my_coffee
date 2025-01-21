@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -15,14 +17,14 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((reqests) -> reqests
-                .requestMatchers("/css/**", "/img/**").permitAll()
+                .requestMatchers("/css/**", "/img/**", "/signUp", "/js/**").permitAll()
                 .anyRequest().authenticated()
             )
 
             .formLogin((login) -> login
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("?loggedIn")
+                .defaultSuccessUrl("/")
                 .failureUrl("/login?error")
                 .permitAll()
             )

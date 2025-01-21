@@ -1,23 +1,27 @@
 package com.example.my_coffee_list.security;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.postingapp.entity.User;
+import com.example.my_coffee_list.entity.User;
 
 public class UserDetailsImpl implements UserDetails {
     private final User user;
-    private final Collection<GrantedAuthority> authorities;
 
-    public UserDetailsImpl(User user){
+    public UserDetailsImpl(User user) {
         this.user = user;
     }
 
-    @Override
-    public User getUser(){
+    public User getUser() {
         return user;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.emptyList(); //ロールがないため空のcollectionを返す
     }
 
     @Override
@@ -26,7 +30,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     @Override
-    public  String getusername(){
+    public String getUsername() {
         return user.getEmail();
     }
 

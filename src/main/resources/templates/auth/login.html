@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../static/header.css">
+  <link rel="stylesheet" href="/css/header.css">
   <title>ログイン/MyCoffee</title>
 </head>
 
 <body>
   <div class="login_page">
     <div class="login_img">
-      <img src="../../static/img/login_page.png" alt="ログインページ写真">
+      <img src="/img/login_page.png" alt="ログインページ写真">
     </div>
 
     <div class="login_form">
@@ -27,20 +27,20 @@
         </div>
       </div>
 
-      <form calss="form_body" action="/login" method="post">
+      <form class="form_body" th:action="@{/login}" method="post">
         <div class="form_box">
           <p>e-mail</p>
           <input type="text" name="username" id="username" autocomplete="email" placeholder="メールアドレス" autofocus>
         </div>
         <div class="form_box">
           <p>password</p>
-          <input type="text" name="password" id="password" autocomplete="new-password" placeholder="パスワード">
+          <input type="text" name="password" id="password" autocomplete="current-password" placeholder="パスワード">
         </div>
 
         <button type="submit">login</button>
       </form>
 
-      <a href="">新規登録はこちら</a>
+      <a th:href="@{/signUp}">新規登録はこちら</a>
       <a href="">パスワードを忘れた方はこちら</a>
 
     </div>

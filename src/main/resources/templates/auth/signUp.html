@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/header.css">
+  <title>ログイン/MyCoffee</title>
+</head>
+
+<body>
+  <div class="signUp">
+
+    <div class="regist_form">
+
+      <form class="form_body" enctype="multipart/form-data" th:action="@{/signUp}" th:object="${signUp}" method="post">
+
+        <div class="form_head">
+          <div style="margin-bottom: 1em">
+            <label for="input_img">アイコンを設定</label><br>
+            <input th:field="*{img}" id="input_img" name="input_img" type="file" accept="image/jpeg,image/png">
+          </div>
+          <div>
+            <img id="img">
+          </div>
+        </div>
+
+        <div class="form_box">
+          <label for="name">ユーザー名:必須</label>
+          <div th:if="${#field.hasErrors('name')}" th:errors="*{'name'}"></div>
+          <input type="text" th:field="*{name}" name="name" id="name" autocomplete="name" placeholder="ユーザー名を入力"
+            autofocus>
+        </div>
+
+        <div class="form_box">
+          <label for="email">email:必須</label>
+          <div th:if="${#field.hasErrors('email')}" th:errors="*{'email'}"></div>
+          <input type="text" th:field="*{email}" name="email" id="email" autocomplete="email" placeholder="メールアドレスを入力">
+        </div>
+
+        <div class="form_box">
+          <label for="password">パスワード:必須</label>
+          <div th:if="${#field.hasErrors('password')}" th:errors="*{'password'}"></div>
+          <input type="password" name="password" id="password" autocomplete="current-password" placeholder="パスワード">
+        </div>
+
+        <p th:if="${#fields.hasErrors('isPassword')}" th:errors="*{isPassword}"></p>
+
+        <div class="form_box">
+          <label for="password">パスワード(確認用):必須</label>
+          <div th:if="${#field.hasErrors('password')}" th:errors="*{'password'}"></div>
+          <input type="password" th:field="*{password}" name="password" id="password" autocomplete="current-password"
+            placeholder="パスワード">
+        </div>
+
+        <button type="submit">login</button>
+      </form>
+
+      <a th:href="@{/signUp}">新規登録はこちら</a>
+      <a href="">パスワードを忘れた方はこちら</a>
+
+
+    </div>
+    <script src="/js/signUp_form.js"></script>
+</body>
+
+</html>

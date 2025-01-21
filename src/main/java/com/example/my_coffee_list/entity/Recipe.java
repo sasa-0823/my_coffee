@@ -25,11 +25,13 @@ public class Recipe {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @Column(name = "name")
-  private String name;
+  @ManyToOne
+  @JoinColumn(name = "bean_id")
+  private Bean bean;
 
-  @Column(name = "roasting")
-  private String roasting;
+  @ManyToOne
+  @JoinColumn(name = "roasting_id")
+  private Roasting roasting;
 
   @Column(name = "grind_size")
   private String grindSize;

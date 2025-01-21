@@ -7,11 +7,21 @@ create table if not exists users (
   enabled boolean not null
 );
 
+create table if not exists bean(
+  id int not null primary key auto_increment,
+  name varchar(50) not null
+  );
+
+create table if not exists roasting(
+  id int not null primary key auto_increment,
+  roast_type varchar(50) not null
+  );
+
 create table if not exists recipe (
   id int not null primary key auto_increment,
   user_id int not null,
-  name varchar(50) not null,
-  roasting varchar(10),
+  bean_id int not null,
+  roasting_id int,
   grind_size varchar(10),
   beans_value int,
   water_volume int,
@@ -22,7 +32,9 @@ create table if not exists recipe (
   is_view boolean not null default false,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  foreign key (user_id) references users(id)
+  foreign key (user_id) references users(id),
+  foreign key (bean_id) references bean(id),
+  foreign key (roasting_id) references roasting(id)
   );
 
 create table if not exists comment (
@@ -38,7 +50,6 @@ create table if not exists favorite (
   id int not null primary key auto_increment,
   user_id int not null,  --自分のid
   recipe_id int not null,
-  is_fav boolean not null default false,
   foreign key (user_id) references users(id),
   foreign key (recipe_id) references recipe(id)
 );
