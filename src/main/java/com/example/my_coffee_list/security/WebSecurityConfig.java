@@ -16,6 +16,27 @@ public class WebSecurityConfig {
         http
             .authorizeHttpRequests((reqests) -> reqests
                 .requestMatchers("/css/**", "/img/**").permitAll()
-                )
+                .anyRequest().authenticated()
+            )
+
+            .formLogin((login) -> login
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("?loggedIn")
+                .failureUrl("/login?error")
+                .permitAll()
+            )
+
+            .logout((logout) -> logout
+                .logoutSuccessUrl("/login")
+                .permitAll()
+            );
+
+        return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
