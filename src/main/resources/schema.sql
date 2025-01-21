@@ -2,7 +2,7 @@ create table if not exists users (
   id int not null primary key auto_increment,
   name varchar(50) not null,
   email varchar(100) not null unique,
-  pass varchar(100) not null,
+  password varchar(200) not null,
   img varchar(255),
   enabled boolean not null
 );

@@ -11,9 +11,8 @@ public class UserDetailsImpl implements UserDetails {
     private final User user;
     private final Collection<GrantedAuthority> authorities;
 
-    public UserDetailsImpl(User user, Collection<GrantedAuthority> authorities){
+    public UserDetailsImpl(User user){
         this.user = user;
-        this.authorities = authorities;
     }
 
     @Override
@@ -29,11 +28,6 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public  String getusername(){
         return user.getEmail();
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
     }
 
     @Override

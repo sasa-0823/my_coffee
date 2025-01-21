@@ -23,8 +23,8 @@ public class User {
   @Column(name = "email")
   private String email;
   
-  @Column(name = "pass")
-  private String pass;
+  @Column(name = "password")
+  private String password;
   
   @Column(name = "img")
   private String img;
