@@ -25,9 +25,13 @@ public class AuthService {
     user.setName(signupForm.getName());
     user.setEmail(signupForm.getEmail());
     user.setPassword(passwordEncoder.encode(signupForm.getPassword()));
-    user.setImg(signupForm.getEmail());
     user.setEnabled(true);
 
-    return userRepository.save(user)
+    userRepository.save(user);
+
+    User registUser = userRepository.findByEmail(signupForm.getEmail());
+    user.setImg(registUser.getId() + ".jpg");
+
+    return userRepository.save(user);
   }
 }
