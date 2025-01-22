@@ -21,7 +21,7 @@
             <input th:field="*{img}" id="input_img" name="input_img" type="file" accept="image/jpeg,image/png">
           </div>
           <div>
-            <img id="img">
+            <img src="/img/default_icon.jpg" id="preview" style="display: none;" alt=""> <!-- ユーザーアイコンをプレビュー -->
           </div>
         </div>
 
@@ -44,7 +44,7 @@
           <input type="password" name="password" id="password" autocomplete="current-password" placeholder="パスワード">
         </div>
 
-        <p th:if="${#fields.hasErrors('isPassword')}" th:errors="*{isPassword}"></p>
+        <p th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}"></p>
 
         <div class="form_box">
           <label for="password">パスワード(確認用):必須</label>
@@ -61,7 +61,7 @@
 
 
     </div>
-    <script src="/js/signUp_form.js"></script>
+    <script src="/js/img_preview.js"></script>
 </body>
 
 </html>

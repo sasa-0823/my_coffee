@@ -43,3 +43,6 @@
         return userRepository.save(user);
     }
 ```
+
+## メールアドレスにトークン発行
+- トークン管理用のテーブルを作成、リポジトリにはfindByToken(String token);を記述してserviceで特定のトークンとリンクしているユーザーを探すことが出来るようにする。

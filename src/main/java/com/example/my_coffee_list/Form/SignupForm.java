@@ -3,7 +3,6 @@ package com.example.my_coffee_list.Form;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -31,12 +30,5 @@ public class SignupForm {
   @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z]).+$", message = "大文字と小文字を１文字以上含めてください")
   private String passwordConfirmation;
 
-  private String img;
-
-  @AssertTrue(message = "パスワードと確認用のパスワードは同一にしてください")
-  public boolean isPassword(){
-    return password.equals(passwordConfirmation); //同一の時trueを返す
-  }
-
-  private MultipartFile imageFile;
+  private MultipartFile img;
 }

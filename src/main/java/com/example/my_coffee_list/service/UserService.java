@@ -9,17 +9,17 @@ import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.repository.UserRepository;
 
 @Service
-public class AuthService {
+public class UserService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
-  public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
   }
 
   @Transactional  //トランザクション化
-  public User createUser(SignupForm signupForm){
+  public void createUser(SignupForm signupForm){
     User user = new User();
 
     user.setName(signupForm.getName());
@@ -32,6 +32,15 @@ public class AuthService {
     User registUser = userRepository.findByEmail(signupForm.getEmail());
     user.setImg(registUser.getId() + ".jpg");
 
-    return userRepository.save(user);
+    userRepository.save(user);
+  }
+
+  public boolean isEmailRegistered(String email){
+    User user = userRepository.findByEmail(email);
+    return user != null; //nullの場合false
+  }
+
+  public  boolean isSamePassword(String password, String passwordConfimation){
+    return password.equals(passwordConfimation);
   }
 }
