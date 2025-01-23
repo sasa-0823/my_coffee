@@ -36,8 +36,8 @@ public class Recipe {
   @Column(name = "grind_size")
   private String grindSize;
 
-  @Column(name = "beans_value")
-  private Integer beansValue;
+  @Column(name = "bean_weight")
+  private Integer beansWeight;
 
   @Column(name = "water_volume")
   private Integer waterVolume;

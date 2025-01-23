@@ -22,9 +22,9 @@ public class VerificationToken {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private Integer user_id;
+    private User user;
 
     @Column(name = "token")
-    private Integer token;
+    private String token;
     
 }

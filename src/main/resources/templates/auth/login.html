@@ -19,9 +19,15 @@
       <div class="form_head">
         <img src="" alt="ログインフォームロゴ">
         <span>sign in</span>
+
+        <div th:if="${authSuccessMessage}">
+          <p th:text="${authSuccessMessage}"></p>
+        </div>
+
         <div th:if="${param.loggedOut}">
           <p>ログアウトしました</p>
         </div>
+
         <div th:if="${param.error}">
           <p>メールアドレスまたはパスワードが正しくありません。</p>
         </div>
@@ -42,7 +48,7 @@
         <button type="submit">login</button>
       </form>
 
-      <a th:href="@{/signUp}">新規登録はこちら</a>
+      <a th:href="@{/signup}">新規登録はこちら</a>
       <a href="">パスワードを忘れた方はこちら</a>
 
     </div>

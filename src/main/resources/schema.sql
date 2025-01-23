@@ -4,6 +4,8 @@ create table if not exists users (
   email varchar(100) not null unique,
   password varchar(200) not null,
   img varchar(255),
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   enabled boolean not null
 );
 
@@ -23,7 +25,7 @@ create table if not exists recipe (
   bean_id int not null,
   roasting_id int,
   grind_size varchar(10),
-  beans_value int,
+  bean_weight int,
   water_volume int,
   water_temp int,
   drip_time int,
