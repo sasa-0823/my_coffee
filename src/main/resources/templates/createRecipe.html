@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/header.css">
+  <title>レシピ登録</title>
+</head>
+
+<body>
+
+  <!-- headerを挿入 -->
+  <header th:replace="~{/index :: header}"></header>
+
+  <main>
+
+    <h3>ユーザー名</h3>
+    <h3 th:text="${user.name}"></h3>
+
+    <h5>【レシピ登録】</h5>
+
+    <form method="post" th:action="@{/createRecipe}" th:object="${recipeForm}">
+
+      <div class="recipe_label">
+        <label for="name"></label>
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <span>豆の種類[必須]</span>
+        <input type="text" th:field="*{name}" placeholder="例) ブルーマウンテン">
+      </div>
+
+      <div class="recipe_label">
+        <label for="roast"></label>
+        <div th:if="${#fields.hasErrors('roast')}" th:errors="*{roast}"></div>
+        <span>焙煎度</span>
+        <input list="roast" value="" th:field="*{roast}">
+        <datalist id="roast">
+          <option value=""></option>
+          <option value="浅煎り" data-id="data1-id1"></option>
+          <option value="中煎り" data-id="data1-id2"></option>
+          <option value="深煎り" data-id="data1-id3"></option>
+        </datalist>
+      </div>
+
+      <div class="recipe_label">
+        <label for="grindSize"></label>
+        <div th:if="${#fields.hasErrors('grindSize')}" th:errors="*{grindSize}"></div>
+        <span>粗度</span>
+        <input list="grindSize" value="" th:field="*{grindSize}">
+        <datalist id="grindSize">
+          <option value=""></option>
+          <option value="細挽き" data-id="data1-id1"></option>
+          <option value="中細挽き" data-id="data1-id2"></option>
+          <option value="中挽き" data-id="data1-id3"></option>
+          <option value="粗挽き" data-id="data1-id4"></option>
+        </datalist>
+      </div>
+
+      <div class="recipe_label">
+        <label for="beanWeight"></label>
+        <div th:if="${#fields.hasErrors('beanWeight')}" th:errors="*{beanWeight}"></div>
+        <span>豆の重さ</span>
+        <input type="number" step="0.1" th:field="*{beanWeight}" placeholder="例) 10g" min="0">
+        <span>g</span>
+      </div>
+      
+      <div class="recipe_label">
+        <label for="waterValue"></label>
+        <div th:if="${#fields.hasErrors('waterValue')}" th:errors="*{waterValue}"></div>
+        <span>水の量</span>
+        <input type="number" step="1" th:field="*{waterValue}" placeholder="例) 150ml" min="0">
+        <span>ml</span>
+      </div>
+
+      <div class="recipe_label">
+        <label for="waterTemp"></label>
+        <div th:if="${#fields.hasErrors('waterTemp')}" th:errors="*{waterTemp}"></div>
+        <span>水の温度</span>
+        <input type="number" step="1" th:field="*{waterTemp}" placeholder="例) 90℃" min="0">
+        <span>℃</span>
+      </div>
+
+      <div class="recipe_label">
+        <label for="steamingTime"></label>
+        <div th:if="${#fields.hasErrors('steamingTime')}" th:errors="*{steamingTime}"></div>
+        <span>蒸らし時間</span>
+        <input type="number" step="1" th:field="*{steamingTime}" placeholder="例) 30秒" min="0">
+        <span>秒</span>
+      </div>
+
+      <div class="recipe_label">
+        <label for="doripper"></label>
+        <div th:if="${#fields.hasErrors('doripper')}" th:errors="*{doripper}"></div>
+        <span>ドリッパー</span>
+        <input type="text" th:field="*{doripper}" placeholder="例) HARIO V60">
+      </div>
+
+      <div class="recipe_label">
+        <label for="filter"></label>
+        <div th:if="${#fields.hasErrors('filter')}" th:errors="*{filter}"></div>
+        <span>フィルター</span>
+        <input type="text" th:field="*{filter}" placeholder="例) ペーパー/ネル/ステン">
+      </div>
+
+      <div class="recipe_label">
+        <label for="memo"></label>
+        <div th:if="${#fields.hasErrors('memo')}" th:errors="*{memo}"></div>
+        <span>メモ</span>
+        <textarea th:field="*{memo}" placeholder="その他説明を記載"></textarea>
+      </div>
+
+      <button type="submit">レシピを保存</button>
+
+    </form>
+    
+  </main>
+</body>
+
+</html>

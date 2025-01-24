@@ -1,7 +1,5 @@
 package com.example.my_coffee_list.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.example.my_coffee_list.entity.Bean;
@@ -16,8 +14,20 @@ public class BeanService {
     this.beanRepository = beanRepository;
   }
 
+  // 豆の名前で検索、無ければDBに追加して検索。
+  public Bean beanSearch(String name) {
+    Bean searchBean = beanRepository.findByName(name);
 
-  public Bean beanSearch(String name){
-    return beanRepository.findByName(name);}
+    if (searchBean == null || searchBean.getName().isEmpty()) {
+      System.out.println("null");
+      Bean bean = new Bean();
+      bean.setName(name);
+      System.out.println(bean);
+      beanRepository.save(bean);
+      return beanRepository.findByName(name);
+    } else {
+      return searchBean;
+    }
+  }
 
 }

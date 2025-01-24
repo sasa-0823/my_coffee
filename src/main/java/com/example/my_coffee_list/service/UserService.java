@@ -83,9 +83,12 @@ public class UserService {
     return password.equals(passwordConfimation);
   }
 
+  //メール認証後enableadをtrue
   @Transactional
     public void enableUser(User user) {
         user.setEnabled(true);
         userRepository.save(user);
     } 
+
+  
 }

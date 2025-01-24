@@ -12,6 +12,7 @@ import lombok.Data;
 @Table(name = "bean")
 @Data
 public class Bean {
+  
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)  //auto_increment
   @Column(name = "id")

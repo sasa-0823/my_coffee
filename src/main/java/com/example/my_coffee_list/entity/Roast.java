@@ -11,7 +11,7 @@ import lombok.Data;
 @Entity
 @Table(name = "roasting")
 @Data
-public class Roasting {
+public class Roast {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)  //auto_increment
   @Column(name = "id")

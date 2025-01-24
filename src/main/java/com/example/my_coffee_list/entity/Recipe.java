@@ -29,9 +29,8 @@ public class Recipe {
   @JoinColumn(name = "bean_id")
   private Bean bean;
 
-  @ManyToOne
-  @JoinColumn(name = "roasting_id")
-  private Roasting roasting;
+  @Column(name = "roast")
+  private String roast;
 
   @Column(name = "grind_size")
   private String grindSize;
@@ -45,11 +44,14 @@ public class Recipe {
   @Column(name = "water_temp")
   private Integer waterTemp;
 
-  @Column(name = "dripTime")
-  private Integer drip_time;
+  @Column(name = "steaming_time")
+  private Integer steamingTime;
 
   @Column(name = "dripper")
   private String dripper;
+
+  @Column(name = "filter")
+  private String filter;
 
   @Column(name = "memo")
   private String memo;

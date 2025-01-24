@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="nfTyhSHagsmYjDY-FQDK" name="ページ1">
-        <mxGraphModel dx="276" dy="596" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="649" dy="752" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -263,13 +263,10 @@
                     <mxGeometry x="1320" y="80" width="270" height="600" as="geometry"/>
                 </mxCell>
                 <mxCell id="106" value="bean name" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="1340" y="130" width="230" height="30" as="geometry"/>
+                    <mxGeometry x="1340" y="170" width="230" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="107" value="header" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1330" y="90" width="250" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="108" value="water&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22bean%20name%22%20style%3D%22rounded%3D0%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%221340%22%20y%3D%22130%22%20width%3D%22230%22%20height%3D%2230%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="1340" y="170" width="230" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="109" value="roast" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1340" y="210" width="230" height="30" as="geometry"/>
@@ -286,7 +283,7 @@
                 <mxCell id="113" value="&amp;nbsp;water temp" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1340" y="370" width="230" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="114" value="drip time" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="114" value="steaming time" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1340" y="410" width="230" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="115" value="dripper name" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -304,13 +301,13 @@
                 <mxCell id="119" value="/search?word=###" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="570" y="100" width="160" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="120" value="/createRecipe/&amp;lt;id&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="120" value="/createRecipe" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="580" y="210" width="160" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="121" value="/edit/&amp;lt;id&amp;gt;/&amp;lt;recipe_id&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="121" value="/edit/&amp;lt;recipe_id&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="560" y="420" width="160" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="122" value="/mypage/&amp;lt;id&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="122" value="/mypage" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="560" y="550" width="160" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="123" value="/" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
@@ -325,7 +322,7 @@
                 <mxCell id="127" value="/signup" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="90" y="350" width="160" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="128" value="/passReset/&amp;lt;id&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="128" value="/passReset" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="890" y="550" width="160" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="129" value="" style="group" parent="1" vertex="1" connectable="0">
@@ -355,7 +352,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="135" value="/favorite/&amp;lt;id&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                <mxCell id="135" value="/favorite" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="540" y="260" width="160" height="30" as="geometry"/>
                 </mxCell>
             </root>
