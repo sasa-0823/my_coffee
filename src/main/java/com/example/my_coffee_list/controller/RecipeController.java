@@ -29,20 +29,29 @@ public class RecipeController {
   @GetMapping("/createRecipe")
   public String createRecipe(Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
     User user = userDetailsImpl.getUser();
-
     model.addAttribute("user", user);
-    model.addAttribute("recipeForm", new RecipeForm());
+    
+    if (model.containsAttribute("recipeForm")) {
+      // Flash Attributes から渡された recipeForm をそのまま使用
+      RecipeForm recipeForm = (RecipeForm) model.getAttribute("recipeForm");
+      model.addAttribute("recipeForm", recipeForm);
+  } else {
+      // recipeForm が存在しない場合、新しいインスタンスを作成して追加
+      model.addAttribute("recipeForm", new RecipeForm());
+  }
 
-    return "createRecipe";
+  return "createRecipe";
   }
 
   // レシピ登録--->エラーが無ければホームに遷移
   @PostMapping("/createRecipe")
   public String registRecipe(@ModelAttribute @Validated RecipeForm recipeForm, BindingResult bindingResult,
-      HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
-      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+      HttpServletRequest httpServletRequest, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
+      RedirectAttributes redirectAttributes, Model model) {
 
+    System.out.println(bindingResult);
     if (bindingResult.hasErrors()) {
+      System.out.println("haitta");
       redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.recipeForm", bindingResult);
       redirectAttributes.addFlashAttribute("recipeForm", recipeForm);
       return "redirect:/createRecipe";
