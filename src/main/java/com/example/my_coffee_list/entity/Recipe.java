@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -64,4 +65,7 @@ public class Recipe {
 
   @Column(name = "updated_at", insertable = false, updatable = false)
   private Timestamp updatedAt;
+  
+  @Transient
+  private boolean isSameUser;
 }

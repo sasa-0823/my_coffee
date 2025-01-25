@@ -28,41 +28,41 @@ public class mainController {
   // ホーム画面
   @GetMapping("/")
   public String indexPage(Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
-    
+
     User user = userDetailsImpl.getUser();
-    
-    // ログインしていない場合の処理->ログインフォームに帰る
-    if (user == null) {
-      model.addAttribute("errorMessage", "アカウントが存在しません");
-      return "redirect:/login";
+    List<Recipe> recipeList = recipeService.recipeByUser(user);
+
+    for (Recipe recipe : recipeList) {
+      User recipeUser = recipe.getUser();
+      // レシピ作成ユーザーとログインユーザーが同じがチェック
+      // key:checkUser ---> true / false
+      recipe.setSameUser(recipeService.checkUser(recipeUser, userDetailsImpl));
     }
 
-    // レシピ作成ユーザーとログインユーザーが同じがチェック
-    // key:checkUser ---> true / false
-    recipeService.checkRecipeSameUser(model, user, userDetailsImpl);
-
-    List<Recipe> RecipeList = recipeService.recipeByUser(user);
-
     model.addAttribute("user", user);
-    model.addAttribute("recipeList", RecipeList);
+    model.addAttribute("recipeList", recipeList);
+    System.out.println(recipeList);
 
     return "index";
   }
 
   // ヘッダーの豆検索フォーム→検索結果へ
   @GetMapping("/search")
-  public String RecipeSearch(@RequestParam("beanSearch") String beanSearch, Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+  public String RecipeSearch(@RequestParam("beanSearch") String beanSearch, Model model,
+      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
     if (!beanSearch.isEmpty()) {
       Bean bean = beanService.beanSearch(beanSearch);
-      List<Recipe> recipe = recipeService.recipeByBean(bean);
+      List<Recipe> recipeList = recipeService.recipeByBean(bean);
+      User user = userDetailsImpl.getUser();
 
-      // ヘッダー用にユーザー情報を渡す
-      User user = userDetailsImpl.getUser(); 
-      // レシピ作成ユーザーとログインユーザーが同じがチェック
-      // key:checkUser ---> true / false
-      recipeService.checkRecipeSameUser(model, user, userDetailsImpl);
+      for (Recipe recipe : recipeList) {
+        User recipeUser = recipe.getUser();
+        // レシピ作成ユーザーとログインユーザーが同じがチェック
+        // key:checkUser ---> true / false
+        recipe.setSameUser(recipeService.checkUser(recipeUser, userDetailsImpl));
+      }
 
-      model.addAttribute("recipeList", recipe);
+      model.addAttribute("recipeList", recipeList);
       model.addAttribute("searchName", beanSearch);
       model.addAttribute("user", user);
 

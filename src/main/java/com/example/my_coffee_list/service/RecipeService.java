@@ -3,7 +3,6 @@ package com.example.my_coffee_list.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.example.my_coffee_list.Form.RecipeForm;
 import com.example.my_coffee_list.entity.Bean;
@@ -12,12 +11,33 @@ import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.repository.RecipeRepository;
 import com.example.my_coffee_list.security.UserDetailsImpl;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class RecipeService {
 
+  public void saveFormDataToRecipe(Recipe recipe, RecipeForm recipeForm, UserDetailsImpl userDetailsImpl) {
+
+    Bean bean = beanService.beanSearch(recipeForm.getName());
+
+    recipe.setUser(userDetailsImpl.getUser());
+    recipe.setBean(bean);
+    recipe.setRoast(recipeForm.getRoast());
+    recipe.setGrindSize(recipeForm.getGrindSize());
+    recipe.setBeansWeight(recipeForm.getBeanWeight());
+    recipe.setWaterVolume(recipeForm.getWaterValue());
+    recipe.setWaterTemp(recipeForm.getWaterTemp());
+    recipe.setSteamingTime(recipeForm.getSteamingTime());
+    recipe.setDripper(recipeForm.getDoripper());
+    recipe.setFilter(recipeForm.getFilter());
+    recipe.setMemo(recipeForm.getMemo());
+
+    recipeRepository.save(recipe);
+  }
+
   private final RecipeRepository recipeRepository;
   private final BeanService beanService;
-  
+
   public RecipeService(RecipeRepository recipeRepository, BeanService beanService) {
     this.recipeRepository = recipeRepository;
     this.beanService = beanService;
@@ -43,31 +63,45 @@ public class RecipeService {
     }
   }
 
-  // 表示しているレシピがログインユーザーと同じかチェックしてchackUserをキーとして渡す
-  public void checkRecipeSameUser(Model model, User user, UserDetailsImpl userDetailsImpl) {
-    boolean checkUser = checkUser(user, userDetailsImpl);
-    model.addAttribute("checkUser", checkUser);
-  }
-
+  // フォームから入力した値を受け取りレシピを登録(新規登録用)
   public void saveRecipe(RecipeForm recipeForm, UserDetailsImpl userDetailsImpl) {
 
     Recipe recipe = new Recipe();
-    Bean bean = beanService.beanSearch(recipeForm.getName());
+    saveFormDataToRecipe(recipe, recipeForm, userDetailsImpl);
+  }
 
-    recipe.setUser(userDetailsImpl.getUser());
-    recipe.setBean(bean);
-    recipe.setRoast(recipeForm.getRoast());
-    recipe.setGrindSize(recipeForm.getGrindSize());
-    recipe.setBeansWeight(recipeForm.getBeanWeight());
-    recipe.setWaterVolume(recipeForm.getWaterValue());
-    recipe.setWaterTemp(recipeForm.getWaterTemp());
-    recipe.setSteamingTime(recipeForm.getSteamingTime());
-    recipe.setDripper(recipeForm.getDoripper());
-    recipe.setFilter(recipeForm.getFilter());
-    recipe.setMemo(recipeForm.getMemo());
+  // フォームから入力した値を受け取りレシピを登録(更新用)
+  public void updataRecipe(Integer recipeId, RecipeForm recipeForm, UserDetailsImpl userDetailsImpl) {
+    Recipe chakeRecipe = recipeRepository.findById(recipeId).orElse(null);
 
-    recipeRepository.save(recipe);
+    if (chakeRecipe != null) {
+      // 更新
+      Recipe recipe = chakeRecipe;
+      saveFormDataToRecipe(recipe, recipeForm, userDetailsImpl);
+      //新規作成
+    } else {
+      Recipe recipe = new Recipe();
+      saveFormDataToRecipe(recipe, recipeForm, userDetailsImpl);
+    }
+  }
 
+  // レシピ編集画面へ遷移
+  public RecipeForm editRecipeFrom(Integer id, RecipeForm recipeForm) {
+    Recipe recipe = recipeRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Recipe not found with id: " + id));
+
+    recipeForm.setName(recipe.getBean().getName());
+    recipeForm.setRoast(recipe.getRoast());
+    recipeForm.setGrindSize(recipe.getGrindSize());
+    recipeForm.setBeanWeight(recipe.getBeansWeight());
+    recipeForm.setWaterValue(recipe.getWaterVolume());
+    recipeForm.setWaterTemp(recipe.getWaterTemp());
+    recipeForm.setSteamingTime(recipe.getSteamingTime());
+    recipeForm.setDoripper(recipe.getDripper());
+    recipeForm.setFilter(recipe.getFilter());
+    recipeForm.setMemo(recipe.getMemo());
+
+    return recipeForm;
   }
 
 }

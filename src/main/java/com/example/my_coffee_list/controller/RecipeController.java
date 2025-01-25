@@ -36,10 +36,14 @@ public class RecipeController {
     return "createRecipe";
   }
 
+  // レシピ登録--->エラーが無ければホームに遷移
   @PostMapping("/createRecipe")
-  public String registRecipe(@ModelAttribute @Validated RecipeForm recipeForm, BindingResult bindingResult,HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,@AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+  public String registRecipe(@ModelAttribute @Validated RecipeForm recipeForm, BindingResult bindingResult,
+      HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
+      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
 
     if (bindingResult.hasErrors()) {
+      redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.recipeForm", bindingResult);
       redirectAttributes.addFlashAttribute("recipeForm", recipeForm);
       return "redirect:/createRecipe";
     }
@@ -48,8 +52,50 @@ public class RecipeController {
       recipeService.saveRecipe(recipeForm, userDetailsImpl);
       return "redirect:/";
     } catch (Exception e) {
+      redirectAttributes.addFlashAttribute("recipeForm", recipeForm);
       System.out.println("エラーが発生しました: " + e.getMessage());
       return "redirect:/createRecipe";
+    }
+  }
+
+  // レシピ編集画面へ遷移
+  @GetMapping("/edit/{RecipeId}/{UserID}")
+  public String editRecipe(Integer RecipeId, Integer UserId, RecipeForm recipeForm,
+      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
+    // レシピを作った本人以外はホームへ遷移(URL直打ち対策)
+    if (UserId == userDetailsImpl.getUser().getId()) {
+
+      User user = userDetailsImpl.getUser();
+      RecipeForm editRecipe = recipeService.editRecipeFrom(RecipeId, recipeForm);
+
+      model.addAttribute("user", user);
+      model.addAttribute("recipeForm", editRecipe);
+      model.addAttribute("recipeId", RecipeId);
+      return "editRecipe";
+    } else {
+      return "redirect:/";
+    }
+  }
+
+  // レシピ更新--->エラーが無ければホームに遷移
+  @PostMapping("/upDataRecipe/{recipeId}/{userId}")
+  public String upDataRecipe(@ModelAttribute @Validated RecipeForm recipeForm, BindingResult bindingResult,
+      HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
+      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Integer recipeId, Integer userId) {
+
+    if (bindingResult.hasErrors()) {
+      redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.recipeForm", bindingResult);
+      redirectAttributes.addFlashAttribute("recipeForm", recipeForm);
+      return "redirect:/edit/{RecipeId}/{UserID}";
+    }
+
+    try {
+      recipeService.updataRecipe(recipeId, recipeForm, userDetailsImpl);
+      return "redirect:/";
+    } catch (Exception e) {
+      redirectAttributes.addFlashAttribute("recipeForm", recipeForm);
+      System.out.println("エラーが発生しました: " + e.getMessage());
+      return "redirect:/edit/{RecipeId}/{UserID}";
     }
   }
 }

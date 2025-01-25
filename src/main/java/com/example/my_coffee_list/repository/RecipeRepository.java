@@ -15,5 +15,4 @@ public interface RecipeRepository extends JpaRepository <Recipe, Integer> {
   public List<Recipe> findByBean(Bean bean);
   public List<Recipe> findByUser(User user);
   public User findByUser(UserDetailsImpl userDetailsImpl);
-
 }
