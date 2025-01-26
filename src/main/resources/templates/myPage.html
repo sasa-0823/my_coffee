@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/header.css">
+  <title>マイページ- BrewShare</title>
+</head>
+
+<body>
+
+  <!-- headerを挿入 -->
+  <header th:replace="~{/htmlComponent/header :: header}"></header>
+
+  <main>
+    <h3>ユーザー名</h3>
+    <h3 th:text="${user.name}"></h3>
+
+    <h5>【マイページ】</h5>
+
+    <div class="menu">
+
+      <img th:src="@{/user_icon/{img}(img=${user.img})}" alt="ユーザーアイコン">
+
+      <div class="content">
+        <span th:text="${user.name}"></span>
+        <button>ユーザー名編集</button>
+      </div>
+
+      <div class="content">
+        <span th:text="'メールアドレス:' + ${user.email}"></span>
+      </div>
+
+      <div class="content">
+        <button>パスワード再設定</button>
+      </div>
+
+      <div class="content">
+        <span>アカウント削除</span>
+        <button>削除</button>
+      </div>
+      
+    </div>
+
+  </main>
+
+</body>
+
+</html>

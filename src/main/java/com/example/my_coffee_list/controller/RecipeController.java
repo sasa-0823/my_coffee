@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -16,6 +17,7 @@ import com.example.my_coffee_list.security.UserDetailsImpl;
 import com.example.my_coffee_list.service.RecipeService;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 
 @Controller
 public class RecipeController {
@@ -49,9 +51,7 @@ public class RecipeController {
       HttpServletRequest httpServletRequest, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
       RedirectAttributes redirectAttributes, Model model) {
 
-    System.out.println(bindingResult);
     if (bindingResult.hasErrors()) {
-      System.out.println("haitta");
       redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.recipeForm", bindingResult);
       redirectAttributes.addFlashAttribute("recipeForm", recipeForm);
       return "redirect:/createRecipe";
@@ -68,18 +68,17 @@ public class RecipeController {
   }
 
   // レシピ編集画面へ遷移
-  @GetMapping("/edit/{RecipeId}/{UserID}")
-  public String editRecipe(Integer RecipeId, Integer UserId, RecipeForm recipeForm,
+  @GetMapping("/edit/{recipeId}/{userId}")
+  public String editRecipe(@PathVariable("recipeId") Integer recipeId, @PathVariable("userId") Integer userId, RecipeForm recipeForm,
       @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
     // レシピを作った本人以外はホームへ遷移(URL直打ち対策)
-    if (UserId == userDetailsImpl.getUser().getId()) {
-
+    if (userId == userDetailsImpl.getUser().getId()) {
       User user = userDetailsImpl.getUser();
-      RecipeForm editRecipe = recipeService.editRecipeFrom(RecipeId, recipeForm);
+      RecipeForm editRecipe = recipeService.setRecipeToEditFrom(recipeId, recipeForm);
 
       model.addAttribute("user", user);
       model.addAttribute("recipeForm", editRecipe);
-      model.addAttribute("recipeId", RecipeId);
+      model.addAttribute("recipeId", recipeId);
       return "editRecipe";
     } else {
       return "redirect:/";
@@ -87,10 +86,10 @@ public class RecipeController {
   }
 
   // レシピ更新--->エラーが無ければホームに遷移
-  @PostMapping("/upDataRecipe/{recipeId}/{userId}")
-  public String upDataRecipe(@ModelAttribute @Validated RecipeForm recipeForm, BindingResult bindingResult,
+  @PostMapping("/updataRecipe/{recipeId}/{userId}")
+  public String updataRecipe(@ModelAttribute @Validated RecipeForm recipeForm, BindingResult bindingResult,
       HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
-      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Integer recipeId, Integer userId) {
+      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, @PathVariable("recipeId") Integer recipeId, @PathVariable("userId")Integer userId) {
 
     if (bindingResult.hasErrors()) {
       redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.recipeForm", bindingResult);
@@ -107,4 +106,16 @@ public class RecipeController {
       return "redirect:/edit/{RecipeId}/{UserID}";
     }
   }
+
+  //レシピを削除
+  @GetMapping("/delete/{recipeId}/{userId}")
+  public String getMethodName(@PathVariable("recipeId") Integer recipeId, @PathVariable("userId") Integer userId, RecipeForm recipeForm,
+  @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
+    // レシピを作った本人以外はホームへ遷移(URL直打ち対策)
+    if (userId == userDetailsImpl.getUser().getId()){
+      recipeService.deleteRecipe(recipeId);
+    }
+      return "redirect:/";
+  }
+  
 }

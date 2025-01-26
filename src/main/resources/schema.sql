@@ -14,11 +14,6 @@ create table if not exists bean(
   name varchar(50) not null
   );
 
-create table if not exists roast(
-  id int not null primary key auto_increment,
-  roast_type varchar(50) not null
-  );
-
 create table if not exists recipe (
   id int not null primary key auto_increment,
   user_id int not null,

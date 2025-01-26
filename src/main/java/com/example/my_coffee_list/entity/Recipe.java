@@ -68,4 +68,7 @@ public class Recipe {
   
   @Transient
   private boolean isSameUser;
+
+  @Transient
+  private boolean isFav;
 }

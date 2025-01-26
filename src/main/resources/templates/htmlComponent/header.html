@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/header.css">
+  <title>ホーム - BrewShare</title>
+</head>
+
+<body>
+  <header th:fragment="header">
+    <div class="menu">
+      <ul>
+        <li class="active"><a th:href="@{/}">logo</a></li>
+        <li>
+          <form type="search" method="get" th:action="@{/search}">
+            <input type="text" name="beanSearch" placeholder="豆の種類を入力" required>
+            <button class="btn">検索</button>
+          </form>
+        </li>
+        <li>アイコン
+          <div class="sub_menu">
+            <ul>
+              <li><a th:href="@{/mypage}">マイページ</a></li>
+              <li><a th:href="@{/Favorite}">ブックマーク</a></li>
+              <li>
+                <a th:href="@{/logout}"
+                  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト
+                </a>
+                <form id="logout-form" th:action="@{/logout}" method="post"></form>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a th:href="@{/createRecipe}">レシピ追加</a></li>
+      </ul>
+    </div>
+  </header>
+
+</body>
+
+</html>

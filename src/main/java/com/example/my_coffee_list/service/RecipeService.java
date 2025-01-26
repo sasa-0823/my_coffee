@@ -53,6 +53,11 @@ public class RecipeService {
     return recipeRepository.findByBean(bean);
   }
 
+  // Idでレシピを特定して取得
+  public Recipe SearchRecipeForId(Integer Id){
+    return recipeRepository.findById(Id).orElse(null);
+  }
+
   // レシピを作成したユーザーとログインしているユーザーが同じかチェック
   // checkRecipeSameUserメソッドで使用
   public boolean checkUser(User user, UserDetailsImpl userDetailsImpl) {
@@ -70,25 +75,10 @@ public class RecipeService {
     saveFormDataToRecipe(recipe, recipeForm, userDetailsImpl);
   }
 
-  // フォームから入力した値を受け取りレシピを登録(更新用)
-  public void updataRecipe(Integer recipeId, RecipeForm recipeForm, UserDetailsImpl userDetailsImpl) {
-    Recipe chakeRecipe = recipeRepository.findById(recipeId).orElse(null);
-
-    if (chakeRecipe != null) {
-      // 更新
-      Recipe recipe = chakeRecipe;
-      saveFormDataToRecipe(recipe, recipeForm, userDetailsImpl);
-      //新規作成
-    } else {
-      Recipe recipe = new Recipe();
-      saveFormDataToRecipe(recipe, recipeForm, userDetailsImpl);
-    }
-  }
-
   // レシピ編集画面へ遷移
-  public RecipeForm editRecipeFrom(Integer id, RecipeForm recipeForm) {
+  public RecipeForm setRecipeToEditFrom(Integer id, RecipeForm recipeForm) {
     Recipe recipe = recipeRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("Recipe not found with id: " + id));
+        .orElseThrow(() -> new EntityNotFoundException("検索結果：レシピなし: " + id));
 
     recipeForm.setName(recipe.getBean().getName());
     recipeForm.setRoast(recipe.getRoast());
@@ -103,5 +93,26 @@ public class RecipeService {
 
     return recipeForm;
   }
+
+  // レシピ編集フォームから入力した値を受け取りレシピを登録(更新用)
+  public void updataRecipe(Integer recipeId, RecipeForm recipeForm, UserDetailsImpl userDetailsImpl) {
+    Recipe chakeRecipe = recipeRepository.findById(recipeId).orElse(null);
+
+    if (chakeRecipe != null) {
+      // 更新
+      Recipe recipe = chakeRecipe;
+      saveFormDataToRecipe(recipe, recipeForm, userDetailsImpl);
+      //新規作成
+    } else {
+      Recipe recipe = new Recipe();
+      saveFormDataToRecipe(recipe, recipeForm, userDetailsImpl);
+    }
+  }
+
+  // レシピを削除
+  public void deleteRecipe(Integer id){
+  Recipe recipe = recipeRepository.findById(id).orElse(null);
+  recipeRepository.delete(recipe);
+}
 
 }

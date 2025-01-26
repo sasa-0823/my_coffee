@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/header.css">
-  <title>レシピ登録</title>
+  <link rel="stylesheet" href="/css/header.css">
+  <title>レシピ編集</title>
 </head>
 
 <body>
 
   <!-- headerを挿入 -->
-  <header th:replace="~{/index :: header}"></header>
+  <header th:replace= "~{/htmlComponent/header :: header}"></header>
 
   <main>
 
@@ -20,7 +20,7 @@
 
     <h5>【レシピ編集】</h5>
 
-    <form method="post" th:action="@{/upDataRecipe/{recipeId}/{userId}(recipeId=${recipeId}, userId=${user.id})}" th:object="${recipeForm}">
+    <form method="post" th:action="@{/updataRecipe/{recipeId}/{userId}(recipeId=${recipeId}, userId=${user.id})}" th:object="${recipeForm}">
 
       <div class="recipe_label">
         <label for="name">豆の種類[必須]</label>

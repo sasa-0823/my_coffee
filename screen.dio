@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="nfTyhSHagsmYjDY-FQDK" name="ページ1">
-        <mxGraphModel dx="649" dy="752" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1750" dy="1147" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -331,8 +331,8 @@
                 <mxCell id="130" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="129" vertex="1">
                     <mxGeometry y="30" width="200" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="131" value="Favorite.html" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="129" vertex="1">
-                    <mxGeometry x="10" width="60" height="30" as="geometry"/>
+                <mxCell id="131" value="favorite.html" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="129" vertex="1">
+                    <mxGeometry x="4" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="132" value="recipe list" style="rounded=0;whiteSpace=wrap;html=1;" parent="129" vertex="1">
                     <mxGeometry x="30" y="70" width="140" height="70" as="geometry"/>
