@@ -24,8 +24,8 @@
       <img th:src="@{/user_icon/{img}(img=${user.img})}" alt="ユーザーアイコン">
 
       <div class="content">
-        <span th:text="${user.name}"></span>
-        <button>ユーザー名編集</button>
+        <span id="userName" th:text="${user.name}"></span>
+        <button onclick="editUserName()">ユーザー名編集</button>
       </div>
 
       <div class="content">
@@ -40,10 +40,31 @@
         <span>アカウント削除</span>
         <button>削除</button>
       </div>
+
+    </div>
+
+    <div class="modal" id="modal" style="display: none;">
       
+      <form th:action="@{/changeName}" method="get">
+        <button onclick="closeModal()" id="closeModal">&times;</button>
+        <input type="text" name="editName" id="editName" th:value="${user.name}">
+        <button type="submit">更新</button>
+      </form>
+
     </div>
 
   </main>
+  <script>
+    const modal = document.getElementById("modal");
+
+    const editUserName = () => {
+      modal.style.display = "block";
+    }
+
+    const closeModal = () => {
+      modal.style.display = "none";
+    }
+  </script>
 
 </body>
 

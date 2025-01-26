@@ -54,7 +54,6 @@ public class UserService {
         // 保存する画像ファイルのパスを指定
         var saveFile = signupForm.getEmail() + ".jpg";  //画像ファイル名
         Path imgFilePath = Path.of(imgFolder, saveFile);  //保存先パス
-        System.out.println(imgFilePath);
 
         // ファイルがない場合は生成
         if (!Files.exists(imgFilePath.getParent())) {
@@ -89,6 +88,11 @@ public class UserService {
         user.setEnabled(true);
         userRepository.save(user);
     } 
+
+  // ユーザー名書き換え
+  public void changeName(User user){
+    userRepository.save(user);
+  }
 
   
 }
