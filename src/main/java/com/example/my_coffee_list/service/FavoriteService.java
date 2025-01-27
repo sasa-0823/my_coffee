@@ -72,4 +72,10 @@ public class FavoriteService {
     return favPage;
   }
 
+  // 特定のユーザーのお気に入り情報を削除(アカウント削除用)
+  public void deleteUserFavorite(User user){
+    List<Favorite> favorites = favoriteRepository.findByUser(user);
+    favoriteRepository.deleteAll(favorites);
+  }
+
 }

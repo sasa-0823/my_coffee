@@ -71,6 +71,7 @@ public class UserService {
     }
   }
 
+
   // 登録するメールアドレスが既に存在しているか確認
   public boolean isEmailRegistered(String email) {
     User user = userRepository.findByEmail(email);
@@ -92,6 +93,11 @@ public class UserService {
   // ユーザー名書き換え
   public void changeName(User user){
     userRepository.save(user);
+  }
+
+  // ユーザーの削除
+  public void deleteUser(User user){
+    userRepository.delete(user);
   }
 
   

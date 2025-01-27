@@ -9,11 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.my_coffee_list.entity.Bean;
+import com.example.my_coffee_list.entity.Comment;
 import com.example.my_coffee_list.entity.Favorite;
 import com.example.my_coffee_list.entity.Recipe;
 import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.security.UserDetailsImpl;
 import com.example.my_coffee_list.service.BeanService;
+import com.example.my_coffee_list.service.CommentService;
 import com.example.my_coffee_list.service.FavoriteService;
 import com.example.my_coffee_list.service.RecipeService;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,11 +25,13 @@ public class mainController {
   private RecipeService recipeService;
   private BeanService beanService;
   private FavoriteService favoriteService;
+  private CommentService commentService;
 
-  public mainController(RecipeService recipeService, BeanService beanService, FavoriteService favoriteService) {
+  public mainController(RecipeService recipeService, BeanService beanService, FavoriteService favoriteService, CommentService commentService) {
     this.recipeService = recipeService;
     this.beanService = beanService;
     this.favoriteService = favoriteService;
+    this.commentService = commentService;
   }
 
   // ホーム画面
@@ -36,6 +40,7 @@ public class mainController {
 
     User user = userDetailsImpl.getUser();
     List<Recipe> recipeList = recipeService.recipeByUser(user);
+    List<Comment> commentList = commentService.getCommenListforRecipe(resipe);
 
     // view表示用
     for (Recipe recipe : recipeList) {
@@ -88,7 +93,7 @@ public class mainController {
     }
   }
 
-  // ブックマークページへ遷移
+  // お気に入りレシピ確認ページへ遷移
   @GetMapping("/Favorite")
   public String favPageView(Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
     List<Favorite> favRecipePage = favoriteService.selectedFavPage(userDetailsImpl.getUser());

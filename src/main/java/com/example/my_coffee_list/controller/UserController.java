@@ -1,5 +1,7 @@
 package com.example.my_coffee_list.controller;
 
+import java.util.UUID;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,18 +9,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.security.UserDetailsImpl;
+import com.example.my_coffee_list.service.CommentService;
+import com.example.my_coffee_list.service.FavoriteService;
+import com.example.my_coffee_list.service.RecipeService;
 import com.example.my_coffee_list.service.UserService;
+import com.example.my_coffee_list.service.VerificationTokenService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class UserController {
   private final UserService userService;
+  private final RecipeService recipeService;
+  private final CommentService commentService;
+  private final FavoriteService favoriteService;
+  private final VerificationTokenService verificationTokenService;
 
-  public UserController(UserService userService) {
+  public UserController(UserService userService, RecipeService recipeService, CommentService commentService,
+      FavoriteService favoriteService, VerificationTokenService verificationTokenService) {
     this.userService = userService;
+    this.recipeService = recipeService;
+    this.commentService = commentService;
+    this.favoriteService = favoriteService;
+    this.verificationTokenService = verificationTokenService;
   }
-
 
   // ユーザー名変更
   @GetMapping("/changeName")
@@ -36,4 +50,27 @@ public class UserController {
     return "redirect:" + resUrl;
 
   }
+
+  // ユーザー削除
+  @GetMapping("/deleteAccount")
+    public String deleteAccount(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl){
+      User user = userDetailsImpl.getUser();
+      //ユーザーのコンテンツを削除(外部キー制約の為)
+      recipeService.deleteUsersRecipe(user);
+      commentService.deleteUserComment(user);
+      favoriteService.deleteUserFavorite(user);
+      verificationTokenService.deleteUserToken(user);
+
+      // ユーザーの認証を有効から無効に変更
+      // 再登録出来るようにメールアドレスを変更
+      user.setEnabled(false);
+      UUID uuid = UUID.randomUUID();
+      String lockString = uuid.toString();
+      user.setEmail(lockString);
+
+      return "redirect:/logout";
+      
+    }
+  
+  
 }

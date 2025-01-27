@@ -10,112 +10,135 @@
 
 <body>
 
-    <div class="menu_list" th:fragment="recipeList">
-      <ul>
-        <div:block th:each="rl:${recipeList}" class="listpackage">
+  <div class="menu_list" th:fragment="recipeList">
+    <ul>
+      <div:block th:each="rl:${recipeList}" class="listpackage">
 
-          <li>
-            <img th:src="@{/user_icon/{img}(img=${rl.user.img})}" alt="ユーザーアイコン">
+        <li>
+          <img th:src="@{/user_icon/{img}(img=${rl.user.img})}" alt="ユーザーアイコン">
+          <span>ユーザー名</span>
+          <span th:text="${rl.user.name} ?: '未入力'"></span>
+
+          <span>豆の名前</span>
+          <span th:text="${rl.bean.name} ?: '未入力'"></span>
+
+          <span>豆の量</span>
+          <span th:text="${rl.beansWeight != null ? rl.beansWeight + 'g' : '未入力'}"></span>
+
+          <span>水の量</span>
+          <span th:text="${rl.waterVolume != null ? rl.waterVolume + 'ml' : '未入力'}"></span>
+
+          <span>水温</span>
+          <span th:text="${rl.waterTemp != null ? rl.waterTemp + '℃' : '未入力'}"></span>
+
+
+          <a th:if="${rl.isSameUser}" th:href="@{/edit/{rlId}/{userId}(rlId = ${rl.id}, userId = ${rl.user.id})}">
+            <input type="button" value="編集">
+          </a>
+
+          <a th:if="${rl.isSameUser}" th:href="@{/delete/{rlId}/{userId}(rlId = ${rl.id}, userId = ${rl.user.id})}">
+            <input type="button" id="delete" value="削除">
+          </a>
+
+          <button th:data-beanName="${rl.bean.name}" th:data-roast="${rl.roast}" th:data-grindSize="${rl.grindSize}"
+            th:data-beansWeight="${rl.beansWeight}" th:data-waterVolume="${rl.waterVolume}"
+            th:data-waterTemp="${rl.waterTemp}" th:data-steamingTime="${rl.steamingTime}"
+            th:data-dripper="${rl.dripper}" th:data-filter="${rl.filter}" th:data-memo="${rl.memo}"
+            th:data-comment="@{/Comment/{recipeId}(recipeId=${rl.id})}"
+            onclick="openModal(this)">
+            詳細確認
+          </button>
+
+          <a th:if="${!rl.isSameUser && rl.isFav}" th:href="@{/Favorite/{rlId}(rlId = ${rl.id})}">
+            <input type="button" id="FavTrue_${rl.id}" value="fav中" style="background-color: tomato;">
+          </a>
+
+          <a th:if="${!rl.isSameUser && !rl.isFav}" th:href="@{/Favorite/{rlId}(rlId = ${rl.id})}">
+            <input type="button" id="FavFalse_${rl.id}" value="favなし" style="background-color: lightblue; ">
+          </a>
+
+        </li>
+      </div:block>
+    </ul>
+
+    <!-- ここからモーダル -->
+    <div id="modal" class="model" style="display: none;">
+      <div class="modelHeader">
+        <h2>レシピ詳細</h2>
+      </div>
+      <div class="modelContent">
+        <table>
+          <tr>
+            <th>豆の名前</th>
+            <td id="name"></td>
+          </tr>
+          <tr>
+            <th>焙煎度</th>
+            <td id="roast">未入力</td>
+          </tr>
+          <tr>
+            <th>粗度</th>
+            <td id="grindSize">未入力</td>
+          </tr>
+          <tr>
+            <th>豆の重さ</th>
+            <td id="beansWeight">未入力</td>
+          </tr>
+          <tr>
+            <th>水の量</th>
+            <td id="waterVolume">未入力</td>
+          </tr>
+          <tr>
+            <th>水の温度</th>
+            <td id="waterTemp">未入力</td>
+          </tr>
+          <tr>
+            <th>蒸らし温度</th>
+            <td id="steamingTime">未入力</td>
+          </tr>
+          <tr>
+            <th>ドリッパー</th>
+            <td id="dripper">未入力</td>
+          </tr>
+          <tr>
+            <th>フィルター</th>
+            <td id="filter">未入力</td>
+          </tr>
+          <tr>
+            <th>メモ</th>
+            <td id="memo">未入力</td>
+          </tr>
+        </table>
+
+        <input type="button" value="閉じる" id="modelClose" onclick="closeModal()">
+      </div>
+
+      <div class="comment">
+
+        <div:block th:each="cl:${commentList}" class="commentList">
+          <div class="commentHeader">
+            <img th:src="@{/user_icon/{img}(img=${cl.user.img})}" alt="ユーザーアイコン">
             <span>ユーザー名</span>
-            <span th:text="${rl.user.name} ?: '未入力'"></span>
+          </div>
 
-            <span>豆の名前</span>
-            <span th:text="${rl.bean.name} ?: '未入力'"></span>
-
-            <span>豆の量</span>
-            <span th:text="${rl.beansWeight != null ? rl.beansWeight + 'g' : '未入力'}"></span>
-
-            <span>水の量</span>
-            <span th:text="${rl.waterVolume != null ? rl.waterVolume + 'ml' : '未入力'}"></span>
-
-            <span>水温</span>
-            <span th:text="${rl.waterTemp != null ? rl.waterTemp + '℃' : '未入力'}"></span>
-
-
-            <a th:if="${rl.isSameUser}" th:href="@{/edit/{rlId}/{userId}(rlId = ${rl.id}, userId = ${rl.user.id})}">
-              <input type="button" value="編集">
-            </a>
-
-            <a th:if="${rl.isSameUser}" th:href="@{/delete/{rlId}/{userId}(rlId = ${rl.id}, userId = ${rl.user.id})}">
-              <input type="button" id="delete" value="削除">
-            </a>
-
-            <button th:data-beanName="${rl.bean.name}" th:data-roast="${rl.roast}" th:data-grindSize="${rl.grindSize}"
-              th:data-beansWeight="${rl.beansWeight}" th:data-waterVolume="${rl.waterVolume}"
-              th:data-waterTemp="${rl.waterTemp}" th:data-steamingTime="${rl.steamingTime}"
-              th:data-dripper="${rl.dripper}" th:data-filter="${rl.filter}" th:data-memo="${rl.memo}"
-              onclick="openModal(this)">
-              詳細確認
-            </button>
-
-            <a th:if="${!rl.isSameUser && rl.isFav}" th:href="@{/Favorite/{rlId}(rlId = ${rl.id})}">
-              <input type="button" id="FavTrue_${rl.id}" value="fav中" style="background-color: tomato;">
-            </a>
-
-            <a th:if="${!rl.isSameUser && !rl.isFav}" th:href="@{/Favorite/{rlId}(rlId = ${rl.id})}">
-              <input type="button" id="FavFalse_${rl.id}" value="favなし" style="background-color: lightblue; ">
-            </a>
-
-          </li>
+          <div class="content">
+            <span th:text="${cl.text}"></span>
+          </div>
         </div:block>
 
-        <div id="modal" class="model" style="display: none;">
-          <div class="modelHeader">
-            <h2>レシピ詳細</h2>
-          </div>
-          <div class="modelContent">
-            <table>
-              <tr>
-                <th>豆の名前</th>
-                <td id="name"></td>
-              </tr>
-              <tr>
-                <th>焙煎度</th>
-                <td id="roast">未入力</td>
-              </tr>
-              <tr>
-                <th>粗度</th>
-                <td id="grindSize">未入力</td>
-              </tr>
-              <tr>
-                <th>豆の重さ</th>
-                <td id="beansWeight">未入力</td>
-              </tr>
-              <tr>
-                <th>水の量</th>
-                <td id="waterVolume">未入力</td>
-              </tr>
-              <tr>
-                <th>水の温度</th>
-                <td id="waterTemp">未入力</td>
-              </tr>
-              <tr>
-                <th>蒸らし温度</th>
-                <td id="steamingTime">未入力</td>
-              </tr>
-              <tr>
-                <th>ドリッパー</th>
-                <td id="dripper">未入力</td>
-              </tr>
-              <tr>
-                <th>フィルター</th>
-                <td id="filter">未入力</td>
-              </tr>
-              <tr>
-                <th>メモ</th>
-                <td id="memo">未入力</td>
-              </tr>
-            </table>
+        <form class="commentForm" method="post" action="">
+          <input type="text" id="commentForm" name="newComment">
+          <button type="submit">コメントする</button>
+        </form>
+      </div>
 
-            <input type="button" value="閉じる" id="modelClose" onclick="closeModal()">
 
-          </div>
-        </div>
-
-      </ul>
-      <script src="/js/modal.js"></script>
-      <script src="/js/colorToggre.js"></script>
     </div>
+
+
+    <script src="/js/modal.js"></script>
+    <script src="/js/colorToggre.js"></script>
+  </div>
 
   </main>
 

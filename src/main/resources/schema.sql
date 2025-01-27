@@ -59,14 +59,6 @@ create table if not Exists verification_tokens(
   foreign key (user_id) references users (id)
 );
 
--- パスワード再設定トークン発行用テーブル
-create table if not Exists pass_reset_tokens(
-  id int not null auto_increment primary key,
-  user_id int not null,
-  token varchar(255) not null,
-  foreign key (user_id) references users (id)
-);
-
 
 
 

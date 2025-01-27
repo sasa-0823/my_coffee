@@ -54,7 +54,7 @@ public class RecipeService {
   }
 
   // Idでレシピを特定して取得
-  public Recipe SearchRecipeForId(Integer Id){
+  public Recipe SearchRecipeForId(Integer Id) {
     return recipeRepository.findById(Id).orElse(null);
   }
 
@@ -102,7 +102,7 @@ public class RecipeService {
       // 更新
       Recipe recipe = chakeRecipe;
       saveFormDataToRecipe(recipe, recipeForm, userDetailsImpl);
-      //新規作成
+      // 新規作成
     } else {
       Recipe recipe = new Recipe();
       saveFormDataToRecipe(recipe, recipeForm, userDetailsImpl);
@@ -110,9 +110,15 @@ public class RecipeService {
   }
 
   // レシピを削除
-  public void deleteRecipe(Integer id){
-  Recipe recipe = recipeRepository.findById(id).orElse(null);
-  recipeRepository.delete(recipe);
-}
+  public void deleteRecipe(Integer id) {
+    Recipe recipe = recipeRepository.findById(id).orElse(null);
+    recipeRepository.delete(recipe);
+  }
+
+  // 特定のユーザーのレシピを全削除(アカウント削除用)
+  public void deleteUsersRecipe(User user) {
+    List<Recipe> recipes = recipeRepository.findByUser(user);
+    recipeRepository.deleteAll(recipes);
+  }
 
 }

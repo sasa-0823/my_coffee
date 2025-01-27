@@ -30,6 +30,12 @@ public class VerificationTokenService {
   // トークンの文字列で検索した結果を返す
   public VerificationToken getVerificationToken(String token) {
     return verificationTokenRepository.findByToken(token);
-}
+  }
+
+  // 特定のユーザーのレコードを削除
+  public void deleteUserToken(User user){
+    VerificationToken verificationToken = verificationTokenRepository.findByUser(user);
+    verificationTokenRepository.delete(verificationToken);
+  }
   
 }

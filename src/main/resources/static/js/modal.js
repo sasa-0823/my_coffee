@@ -14,6 +14,9 @@ const modal = document.getElementById("modal")
           const filter = button.getAttribute("data-filter");
           const memo = button.getAttribute("data-memo");
 
+          const commentUrl =button.getAttribute("data-comment");
+          const commentForm = document.getElementById("commentForm");
+
           document.getElementById("name").innerText = beanName ? beanName : "未入力";
           document.getElementById("roast").innerText = roast ? roast : "未入力";
           document.getElementById("grindSize").innerText = grindSize ? grindSize : "未入力";
@@ -24,6 +27,7 @@ const modal = document.getElementById("modal")
           document.getElementById("dripper").innerText = dripper ? dripper : "未入力";
           document.getElementById("filter").innerText = filter ? filter : "未入力";
           document.getElementById("memo").innerText = memo ? memo : "未入力";
+          commentForm.action = commentUrl;
         }
 
         const closeModal = () => {
