@@ -1,6 +1,7 @@
 package com.example.my_coffee_list.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -71,4 +72,7 @@ public class Recipe {
 
   @Transient
   private boolean isFav;
+
+  @Transient
+  private List<Comment> comment;
 }

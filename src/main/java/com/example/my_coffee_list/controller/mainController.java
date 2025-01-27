@@ -27,7 +27,8 @@ public class mainController {
   private FavoriteService favoriteService;
   private CommentService commentService;
 
-  public mainController(RecipeService recipeService, BeanService beanService, FavoriteService favoriteService, CommentService commentService) {
+  public mainController(RecipeService recipeService, BeanService beanService, FavoriteService favoriteService,
+      CommentService commentService) {
     this.recipeService = recipeService;
     this.beanService = beanService;
     this.favoriteService = favoriteService;
@@ -40,7 +41,6 @@ public class mainController {
 
     User user = userDetailsImpl.getUser();
     List<Recipe> recipeList = recipeService.recipeByUser(user);
-    List<Comment> commentList = commentService.getCommenListforRecipe(resipe);
 
     // view表示用
     for (Recipe recipe : recipeList) {
@@ -79,6 +79,10 @@ public class mainController {
         // レシピをお気に入りしているユーザーとログインユーザーが同じがチェック
         Favorite searchedFavRecipe = favoriteService.searchFavRecipe(recipe);
         recipe.setFav(favoriteService.checkFavRecipe(searchedFavRecipe, favUser));
+
+        // レシピにコメントを付ける
+        List<Comment> comentList = commentService.getCommenListforRecipe(recipe);
+        recipe.setComment(comentList);
       }
 
       model.addAttribute("recipeList", recipeList);
@@ -97,22 +101,26 @@ public class mainController {
   @GetMapping("/Favorite")
   public String favPageView(Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
     List<Favorite> favRecipePage = favoriteService.selectedFavPage(userDetailsImpl.getUser());
-    
+
     User user = userDetailsImpl.getUser();
     List<Recipe> recipeList = favRecipePage.stream()
-    .map(Favorite::getRecipe)
-    .collect(Collectors.toList());
+        .map(Favorite::getRecipe)
+        .collect(Collectors.toList());
 
     for (Recipe recipe : recipeList) {
       User recipeCreateUser = recipe.getUser();
 
-      // レシピ作成ユーザーとログインユーザーが同じがチェック
+      // レシピ作成ユーザーとログインユーザーが同じがチェック(表示切替用)
       recipe.setSameUser(recipeService.checkUser(recipeCreateUser, userDetailsImpl));
 
+      // レシピをお気に入りしているユーザーとログインユーザーが同じがチェック(お気に入り表示切替)
       User favUser = userDetailsImpl.getUser();
-      // レシピをお気に入りしているユーザーとログインユーザーが同じがチェック
       Favorite searchedFavRecipe = favoriteService.searchFavRecipe(recipe);
       recipe.setFav(favoriteService.checkFavRecipe(searchedFavRecipe, favUser));
+
+      // レシピにコメントを付ける
+      List<Comment> comentList = commentService.getCommenListforRecipe(recipe);
+      recipe.setComment(comentList);
     }
 
     model.addAttribute("recipeList", recipeList);
@@ -122,7 +130,7 @@ public class mainController {
   }
 
   @GetMapping("/mypage")
-  public String mypage(Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl){
+  public String mypage(Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
     User user = userDetailsImpl.getUser();
     model.addAttribute("user", user);
 

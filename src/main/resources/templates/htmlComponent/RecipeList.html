@@ -44,7 +44,7 @@
             th:data-beansWeight="${rl.beansWeight}" th:data-waterVolume="${rl.waterVolume}"
             th:data-waterTemp="${rl.waterTemp}" th:data-steamingTime="${rl.steamingTime}"
             th:data-dripper="${rl.dripper}" th:data-filter="${rl.filter}" th:data-memo="${rl.memo}"
-            th:data-comment="@{/Comment/{recipeId}(recipeId=${rl.id})}"
+            th:data-comment-url="@{/Comment/{recipeId}(recipeId=${rl.id})}" th:data-comment="${rl.comment}"
             onclick="openModal(this)">
             詳細確認
           </button>
@@ -113,21 +113,14 @@
         <input type="button" value="閉じる" id="modelClose" onclick="closeModal()">
       </div>
 
-      <div class="comment">
+      <div class="comment" id="comment">
 
-        <div:block th:each="cl:${commentList}" class="commentList">
-          <div class="commentHeader">
-            <img th:src="@{/user_icon/{img}(img=${cl.user.img})}" alt="ユーザーアイコン">
-            <span>ユーザー名</span>
-          </div>
+        <div id="commentList">
+          ここにコメントを表示（model.jsより挿入）
+        </div>
 
-          <div class="content">
-            <span th:text="${cl.text}"></span>
-          </div>
-        </div:block>
-
-        <form class="commentForm" method="post" action="">
-          <input type="text" id="commentForm" name="newComment">
+        <form id="commentForm" method="post" action="">
+          <input type="text" name="newComment">
           <button type="submit">コメントする</button>
         </form>
       </div>
