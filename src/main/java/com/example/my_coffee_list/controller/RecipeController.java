@@ -18,7 +18,6 @@ import com.example.my_coffee_list.service.RecipeService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-
 @Controller
 public class RecipeController {
   final RecipeService recipeService;

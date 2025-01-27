@@ -5,14 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-
 import com.example.my_coffee_list.Form.SignupForm;
 import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.entity.VerificationToken;
 import com.example.my_coffee_list.event.SignupEventPublisher;
 import com.example.my_coffee_list.service.UserService;
 import com.example.my_coffee_list.service.VerificationTokenService;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;

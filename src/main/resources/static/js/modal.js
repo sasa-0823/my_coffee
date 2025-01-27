@@ -36,6 +36,8 @@ function openModal(button) {
   const commentForm = document.getElementById("commentForm");
   const commentList = document.getElementById("commentlist");
 
+  console.log(beanName);
+
   document.getElementById("name").innerText = beanName ? beanName : "未入力";
   document.getElementById("roast").innerText = roast ? roast : "未入力";
   document.getElementById("grindSize").innerText = grindSize ? grindSize : "未入力";
@@ -47,7 +49,6 @@ function openModal(button) {
   document.getElementById("filter").innerText = filter ? filter : "未入力";
   document.getElementById("memo").innerText = memo ? memo : "未入力";
   commentForm.action = commentUrl;
-  commentList.th: each = commentData
 
 };
 
