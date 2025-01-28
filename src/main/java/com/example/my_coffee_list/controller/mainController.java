@@ -52,6 +52,10 @@ public class mainController {
       // レシピをお気に入りしているユーザーとログインユーザーが同じがチェック
       Favorite searchedFavRecipe = favoriteService.searchFavRecipe(recipe);
       recipe.setFav(favoriteService.checkFavRecipe(searchedFavRecipe, favUser));
+
+      // レシピにコメントを付ける
+      List<Comment> comentList = commentService.getCommenListforRecipe(recipe);
+      recipe.setComment(comentList);
     }
 
     model.addAttribute("user", user);
@@ -70,10 +74,10 @@ public class mainController {
       User user = userDetailsImpl.getUser();
 
       for (Recipe recipe : recipeList) {
-        User recipeCreateUser = recipe.getUser();
+        User recipeUser = recipe.getUser();
 
         // レシピ作成ユーザーとログインユーザーが同じがチェック
-        recipe.setSameUser(recipeService.checkUser(recipeCreateUser, userDetailsImpl));
+        recipe.setSameUser(recipeService.checkUser(recipeUser, userDetailsImpl));
 
         User favUser = userDetailsImpl.getUser();
         // レシピをお気に入りしているユーザーとログインユーザーが同じがチェック

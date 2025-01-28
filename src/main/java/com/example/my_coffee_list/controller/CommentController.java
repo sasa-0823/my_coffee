@@ -24,6 +24,7 @@ public class CommentController {
   // コメント追加
   @PostMapping("/Comment/{recipeId}")
   public String addComment(RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, @PathVariable("recipeId") Integer recipeId, @RequestParam("newComment") String comment) {
+    System.out.println("コメント追加走った");
     User user = userDetailsImpl.getUser();
     commentService.addComment(user, recipeId, comment);
     redirectAttributes.addFlashAttribute("message", "コメントしました");

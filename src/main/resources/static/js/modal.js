@@ -15,9 +15,15 @@ function openModal(button) {
   const memo = button.getAttribute("data-memo");
 
   const commentUrl = button.getAttribute("data-comment-url");
-  const commentData = button.getAttribute("data-comment");
+  const link = [[@{commentUrl}]];
 
-  if (commentData.length > 0) {
+  const comment = button.getAttribute("data-comment");
+  const commentData = JSON.parse(comment);
+  const commentForm = document.getElementById("commentForm");
+
+  console.log(commentUrl);
+
+  if (commentData.length != 0) {
     commentData.forEach(comment => {
       const commentBlock = document.getElementById("commentList");
       commentBlock.innerHTML = `
@@ -31,12 +37,7 @@ function openModal(button) {
           </div>
           `
     });
-  }
-
-  const commentForm = document.getElementById("commentForm");
-  const commentList = document.getElementById("commentlist");
-
-  console.log(beanName);
+  };
 
   document.getElementById("name").innerText = beanName ? beanName : "未入力";
   document.getElementById("roast").innerText = roast ? roast : "未入力";
@@ -48,7 +49,8 @@ function openModal(button) {
   document.getElementById("dripper").innerText = dripper ? dripper : "未入力";
   document.getElementById("filter").innerText = filter ? filter : "未入力";
   document.getElementById("memo").innerText = memo ? memo : "未入力";
-  commentForm.action = commentUrl;
+  
+  commentForm.setAttribute('th:action', '@{' + (commentUrl) + '}');
 
 };
 

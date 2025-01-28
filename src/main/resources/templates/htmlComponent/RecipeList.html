@@ -15,7 +15,7 @@
       <div:block th:each="rl:${recipeList}" class="listpackage">
 
         <li>
-          <img th:src="@{/user_icon/{img}(img=${rl.user.img})}" alt="ユーザーアイコン">
+          <img th:src="@{/user_icon/{img}(img=${rl.user.img})}" alt="ユーザーアイコン" width="100">
           <span>ユーザー名</span>
           <span th:text="${rl.user.name} ?: '未入力'"></span>
 
@@ -113,15 +113,15 @@
         <input type="button" value="閉じる" id="modelClose" onclick="closeModal()">
       </div>
 
-      <div class="comment" id="comment">
+      <div id="comment">
 
         <div id="commentList">
-          ここにコメントを表示（model.jsより挿入）
+          <!-- ここにコメントを表示（model.jsより挿入） -->
         </div>
 
-        <form id="commentForm" method="post" action="">
-          <input type="text" name="newComment">
-          <button type="submit">コメントする</button>
+        <form id="commentForm" method="post">
+          <input type="text" name="newComment" required>
+          <button>コメントする</button>
         </form>
       </div>
 
