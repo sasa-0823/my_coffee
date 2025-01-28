@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -29,5 +30,8 @@ public class Comment {
 
   @Column(name = "text")
   private String text;
+
+  @Transient
+  private boolean isSameUser;
   
 }

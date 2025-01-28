@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/header.css">
+  <title>レシピ編集</title>
+</head>
+
+<body>
+
+  <!-- headerを挿入 -->
+  <header th:replace="~{/htmlComponent/header :: header}"></header>
+
+  <main>
+    <div class="content">
+      <div class="Top">
+        <h2>レシピ詳細</h2>
+      </div>
+      <div class="list">
+        <ul>
+          <li>
+            <span>豆の名前</span>
+            <span th:text="${recipe.bean.name}"></span>
+          </li>
+          <li>
+            <span>焙煎度</span>
+            <span th:text="${recipe.roast}"></span>
+          </li>
+          <li>
+            <span>粗度</span>
+            <span th:text="${recipe.grindSize}"></span>
+          </li>
+          <li>
+            <span>豆の重さ</span>
+            <span th:text="${recipe.beansWeight}"></span>
+          </li>
+          <li>
+            <span>水の量</span>
+            <span th:text="${recipe.waterVolume}"></span>
+          </li>
+          <li>
+            <span>水の温度</span>
+            <span th:text="${recipe.waterTemp}"></span>
+          </li>
+          <li>
+            <span>蒸らし温度</span>
+            <span th:text="${recipe.steamingTime}"></span>
+          </li>
+          <li>
+            <span>ドリッパー</span>
+            <span th:text="${recipe.dripper}"></span>
+          </li>
+          <li>
+            <span>フィルター</span>
+            <span th:text="${recipe.filter}"></span>
+          </li>
+          <li>
+            <span>メモ</span>
+            <span th:text="${recipe.memo}"></span>
+          </li>
+        </ul>
+
+        <button type="button" onclick="history.back()">戻る</button>
+      </div>
+
+      <div id="comment">
+
+        <div th:each="comment:${commentList}" style="background-color: lightblue;">
+
+          <div class="header">
+            <img th:src="@{/user_icon/{img}(img=${comment.user.img})}" alt="ユーザーアイコン">
+            <span>ユーザー名</span>
+            <span th:text="${comment.user.name}"></span>
+
+            <a th:if="${comment.sameUser}" th:href="@{/deleteComment/{commentid}(commentid = ${comment.id})}">
+              <input type="button" value="削除">
+            </a>
+
+          </div>
+
+          <div class="content">
+            <span th:text="${comment.text}"></span>
+          </div>
+        </div>
+
+        <form id="commentForm" method="post" th:action="@{/Comment/{recipeId}(recipeId=${recipe.id})}">
+          <textarea name="newComment" required></textarea>
+          <button type="submit">コメント投稿</button>
+        </form>
+      </div>
+
+    </div>
+    </div>
+
+
+    <script src="/js/modal.js"></script>
+    <script src="/js/colorToggre.js"></script>
+    </div>
+
+  </main>
+</body>
+
+</html>

@@ -9,6 +9,7 @@ import com.example.my_coffee_list.entity.Recipe;
 import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.repository.CommentRepository;
 import com.example.my_coffee_list.repository.RecipeRepository;
+import com.example.my_coffee_list.security.UserDetailsImpl;
 
 @Service
 public class CommentService {
@@ -56,4 +57,8 @@ public class CommentService {
     commentRepository.deleteById(Id);
   }
 
+  // ログインユーザーとコメントをしたユーザーが同じかチェック
+  public Boolean checkCommentUser(User user, UserDetailsImpl userDetailsImpl) {
+    return user.getId().equals(userDetailsImpl.getUser().getId());
+}
 }

@@ -1,5 +1,7 @@
 package com.example.my_coffee_list.controller;
 
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,18 +14,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.my_coffee_list.Form.RecipeForm;
+import com.example.my_coffee_list.entity.Comment;
+import com.example.my_coffee_list.entity.Recipe;
 import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.security.UserDetailsImpl;
+import com.example.my_coffee_list.service.CommentService;
 import com.example.my_coffee_list.service.RecipeService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+
 @Controller
 public class RecipeController {
   final RecipeService recipeService;
+  final CommentService commentService;
 
-  public RecipeController(RecipeService recipeService) {
+  public RecipeController(RecipeService recipeService, CommentService commentService) {
     this.recipeService = recipeService;
+    this.commentService = commentService;
   }
 
   // レシピ登録画面に遷移
@@ -115,6 +123,21 @@ public class RecipeController {
       recipeService.deleteRecipe(recipeId);
     }
       return "redirect:/";
+  }
+  
+  // レシピの詳細確認（コメントも併せて表示）
+  @GetMapping("/RecipeDetails/{resipeId}")
+  public String recipeDetails(@PathVariable("resipeId") Integer recipeId, Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+    Recipe recipe = recipeService.SearchRecipeForId(recipeId);
+    List<Comment> commentList = commentService.getCommenListforRecipe(recipe);
+    for (Comment comment : commentList){
+      User commentUser = comment.getUser();
+      comment.setSameUser(commentService.checkCommentUser(commentUser, userDetailsImpl));
+    }
+
+    model.addAttribute("recipe", recipe);
+    model.addAttribute("commentList", commentList);
+      return "recipeDetails";
   }
   
 }

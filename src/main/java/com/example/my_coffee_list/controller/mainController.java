@@ -54,8 +54,9 @@ public class mainController {
       recipe.setFav(favoriteService.checkFavRecipe(searchedFavRecipe, favUser));
 
       // レシピにコメントを付ける
-      List<Comment> comentList = commentService.getCommenListforRecipe(recipe);
-      recipe.setComment(comentList);
+      List<Comment> commentList = commentService.getCommenListforRecipe(recipe);
+      List<String> commentTexts = commentList.stream().map(Comment::getText).collect(Collectors.toList());
+      recipe.setComment(commentTexts);
     }
 
     model.addAttribute("user", user);
@@ -85,10 +86,13 @@ public class mainController {
         recipe.setFav(favoriteService.checkFavRecipe(searchedFavRecipe, favUser));
 
         // レシピにコメントを付ける
-        List<Comment> comentList = commentService.getCommenListforRecipe(recipe);
-        recipe.setComment(comentList);
+        List<Comment> commentList = commentService.getCommenListforRecipe(recipe);
+        List<String> commentTexts = commentList.stream().map(Comment::getText).collect(Collectors.toList());
+        System.out.println(commentTexts);
+        recipe.setComment(commentTexts);
       }
-
+      
+      System.out.println(recipeList);
       model.addAttribute("recipeList", recipeList);
       model.addAttribute("searchName", beanSearch);
       model.addAttribute("user", user);
@@ -123,8 +127,9 @@ public class mainController {
       recipe.setFav(favoriteService.checkFavRecipe(searchedFavRecipe, favUser));
 
       // レシピにコメントを付ける
-      List<Comment> comentList = commentService.getCommenListforRecipe(recipe);
-      recipe.setComment(comentList);
+      List<Comment> commentList = commentService.getCommenListforRecipe(recipe);
+      List<String> commentTexts = commentList.stream().map(Comment::getText).collect(Collectors.toList());
+      recipe.setComment(commentTexts);
     }
 
     model.addAttribute("recipeList", recipeList);
@@ -133,6 +138,7 @@ public class mainController {
     return "favorite";
   }
 
+  // mypageに遷移
   @GetMapping("/mypage")
   public String mypage(Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
     User user = userDetailsImpl.getUser();

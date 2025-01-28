@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/header.css">
+  <title>パスワード再設定 - BrewShare</title>
+</head>
+
+<body>
+
+  <!-- headerを挿入 -->
+  <header th:replace="~{/htmlComponent/header :: header}"></header>
+
+  <main>
+    <h3>ユーザー名</h3>
+    <h3 th:text="${user.name}"></h3>
+
+    <h5>【パスワード再設定】</h5>
+
+    <form class="form_body" enctype="multipart/form-data" th:action="@{/updataPw}" th:object="${updataPwForm}"
+      method="post">
+
+      <div class="form_box">
+        <label for="beforePw">現在のパスワード:必須</label>
+        <div th:if="${#fields.hasErrors('beforePw')}" th:errors="*{beforePw}"></div>
+        <input type="password" th:field="*{beforePw}" placeholder="現在のパスワード">
+      </div>
+
+      <div class="form_box">
+        <label for="afterPw">新しいパスワード:必須</label>
+        <div th:if="${#fields.hasErrors('afterPw')}" th:errors="*{afterPw}"></div>
+        <input type="password" th:field="*{afterPw}" placeholder="新しいパスワード">
+      </div>
+
+      <p th:if="${#fields.hasErrors('afterPwConfirmation')}" th:errors="*{afterPwConfirmation}"></p>
+
+      <div class="form_box">
+        <label for="afterPwConfirmation">新しいパスワード(確認用):必須</label>
+        <div th:if="${#fields.hasErrors('afterPwConfirmation')}" th:errors="*{afterPwConfirmation}"></div>
+        <input type="password" th:field="*{afterPwConfirmation}" placeholder="新しいパスワード">
+      </div>
+
+      <button type="submit">登録</button>
+
+
+    </form>
+
+
+
+  </main>
+
+</body>
+
+</html>

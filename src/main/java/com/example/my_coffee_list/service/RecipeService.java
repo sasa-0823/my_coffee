@@ -59,7 +59,6 @@ public class RecipeService {
   }
 
   // レシピを作成したユーザーとログインしているユーザーが同じかチェック
-  // checkRecipeSameUserメソッドで使用
   public boolean checkUser(User user, UserDetailsImpl userDetailsImpl) {
     return user.getId().equals(userDetailsImpl.getUser().getId());
 }

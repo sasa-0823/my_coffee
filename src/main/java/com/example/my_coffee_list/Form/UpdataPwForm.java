@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class UpdataPwFrom {
+public class UpdataPwForm {
     @NotBlank(message = "現在のパスワードを入力してください")
     private String beforePw;
 

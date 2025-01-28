@@ -13,18 +13,16 @@ function openModal(button) {
   const dripper = button.getAttribute("data-dripper");
   const filter = button.getAttribute("data-filter");
   const memo = button.getAttribute("data-memo");
-
+  const commentBlock = document.getElementById("commentList");
   const commentUrl = button.getAttribute("data-comment-url");
 
-  const comment = button.getAttribute("data-comment");
-  const commentData = JSON.parse(comment);
+  const commentData = button.getAttribute("data-comment");
+  const commentJson = JSON.parse(commentData);
+  console.log(commentData);
 
-  console.log(commentUrl);
-
-  if (commentData.length != 0) {
-    commentData.forEach(comment => {
-      const commentBlock = document.getElementById("commentList");
-      commentBlock.innerHTML = `
+  if (commentJson.length != 0) {
+    commentJson.forEach(comment => {
+      commentBlock.innerHTML += `
         <div class="commentHeader">
             <img th:src="@{/user_icon/{img}(img=${comment.user.img})}" alt="ユーザーアイコン">
             <span>ユーザー名</span>
@@ -47,10 +45,10 @@ function openModal(button) {
   document.getElementById("dripper").innerText = dripper ? dripper : "未入力";
   document.getElementById("filter").innerText = filter ? filter : "未入力";
   document.getElementById("memo").innerText = memo ? memo : "未入力";
-  
-  
+
+
   const commentForm = document.getElementById("commentForm");
-  commentForm.setAttribute('action', '@{' + (commentUrl) + '}');
+  commentForm.setAttribute('action', (commentUrl));
 
 };
 

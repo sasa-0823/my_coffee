@@ -40,14 +40,13 @@
             <input type="button" id="delete" value="削除">
           </a>
 
-          <button th:data-beanName="${rl.bean.name}" th:data-roast="${rl.roast}" th:data-grindSize="${rl.grindSize}"
-            th:data-beansWeight="${rl.beansWeight}" th:data-waterVolume="${rl.waterVolume}"
-            th:data-waterTemp="${rl.waterTemp}" th:data-steamingTime="${rl.steamingTime}"
-            th:data-dripper="${rl.dripper}" th:data-filter="${rl.filter}" th:data-memo="${rl.memo}"
-            th:data-comment-url="@{/Comment/{recipeId}(recipeId=${rl.id})}" th:data-comment="${rl.comment}"
-            onclick="openModal(this)">
-            詳細確認
-          </button>
+          <a th:href="@{/RecipeDetails/{rlId}(rlId = ${rl.id})}">
+            <input type="button" id="delete" value="詳細確認">
+          </a>
+
+          
+
+          
 
           <a th:if="${!rl.isSameUser && rl.isFav}" th:href="@{/Favorite/{rlId}(rlId = ${rl.id})}">
             <input type="button" id="FavTrue_${rl.id}" value="fav中" style="background-color: tomato;">
@@ -117,9 +116,17 @@
 
         <div id="commentList">
           <!-- ここにコメントを表示（model.jsより挿入） -->
+          <!-- <div class="commentHeader">
+            <img th:src="" alt="ユーザーアイコン">
+            <span>ユーザー名</span>
+          </div>
+
+          <div class="content">
+            <span th:text=""></span>
+          </div> -->
         </div>
 
-        <form id="commentForm" method="post" th:action="">
+        <form id="commentForm" method="post" th:action="@{/}">
           <input type="text" name="newComment" required>
           <button>コメントする</button>
         </form>

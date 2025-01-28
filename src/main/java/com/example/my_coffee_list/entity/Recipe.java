@@ -74,5 +74,5 @@ public class Recipe {
   private boolean isFav;
 
   @Transient
-  private List<Comment> comment;
+  private List<String> comment;
 }
