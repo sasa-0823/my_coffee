@@ -44,7 +44,7 @@ public class UserController {
     if (userDetailsImpl.getUsername() != editName) {
       User user = userDetailsImpl.getUser();
       user.setName(editName);
-      userService.changeName(user); //ユーザー情報書き換え
+      userService.changeUser(user); //ユーザー情報書き換え
     }
     
     return "redirect:" + resUrl;
@@ -62,11 +62,13 @@ public class UserController {
       verificationTokenService.deleteUserToken(user);
 
       // ユーザーの認証を有効から無効に変更
-      // 再登録出来るようにメールアドレスを変更
+      // 再登録出来るようにメールアドレスを変更(メールアドレスはユニークな為)
       user.setEnabled(false);
       UUID uuid = UUID.randomUUID();
       String lockString = uuid.toString();
       user.setEmail(lockString);
+      userService.changeUser(user);  //メールアドレスをランダム値に変更
+      
 
       return "redirect:/logout";
       

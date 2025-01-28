@@ -78,11 +78,6 @@ public class UserService {
     return user != null; // nullの場合false
   }
 
-  // 確認用のパスワードが１回目入力のパスワードと一致しているか
-  public boolean isSamePassword(String password, String passwordConfimation) {
-    return password.equals(passwordConfimation);
-  }
-
   //メール認証後enableadをtrue
   @Transactional
     public void enableUser(User user) {
@@ -90,14 +85,19 @@ public class UserService {
         userRepository.save(user);
     } 
 
-  // ユーザー名書き換え
-  public void changeName(User user){
+  // ユーザー書き換え
+  public void changeUser(User user){
     userRepository.save(user);
   }
 
   // ユーザーの削除
   public void deleteUser(User user){
     userRepository.delete(user);
+  }
+
+  // ユーザーの検索(email)
+  public User selectUserForEmail(String email){
+    return userRepository.findByEmail(email);
   }
 
   

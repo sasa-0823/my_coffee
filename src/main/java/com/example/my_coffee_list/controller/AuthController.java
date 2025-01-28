@@ -9,6 +9,7 @@ import com.example.my_coffee_list.Form.SignupForm;
 import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.entity.VerificationToken;
 import com.example.my_coffee_list.event.SignupEventPublisher;
+import com.example.my_coffee_list.service.PasswordService;
 import com.example.my_coffee_list.service.UserService;
 import com.example.my_coffee_list.service.VerificationTokenService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,13 +23,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AuthController {
     private final UserService userService;
+    private final PasswordService passwordService;
     private final SignupEventPublisher signupEventPublisher;
     private final VerificationTokenService verificationTokenService;
 
-    public AuthController(UserService userService, SignupEventPublisher signupEventPublisher,VerificationTokenService verificationTokenService) {
+    public AuthController(UserService userService, SignupEventPublisher signupEventPublisher,VerificationTokenService verificationTokenService, PasswordService passwordService) {
         this.userService = userService;
         this.signupEventPublisher = signupEventPublisher;
         this.verificationTokenService = verificationTokenService;
+        this.passwordService = passwordService;
     }
 
     @GetMapping("/login")
@@ -36,18 +39,18 @@ public class AuthController {
         return "auth/login";
     }
 
-    // 新規登録画面遷移時
+    // ログイン画面->新規登録画面遷移
     @GetMapping("/signup")
-    public String to_signUp_page(Model model) {
+    public String SignUpPage(Model model) {
         if (!model.containsAttribute("signupForm")) {
             model.addAttribute("signupForm", new SignupForm());
         }
         return "auth/signUp";
     }
 
-    // 新規登録時(新規登録画面->ログイン画面へ遷移)
+    // 新規登録時(新規登録画面->メール送信アナウンス画面へ遷移)
     @PostMapping("/signup")
-    public String signUp_regist(@ModelAttribute @Validated SignupForm signupForm,
+    public String signUpRegist(@ModelAttribute @Validated SignupForm signupForm,
             BindingResult bindingResult,
             HttpServletRequest httpServletRequest,
             Model model) {
@@ -56,7 +59,7 @@ public class AuthController {
             bindingResult.addError(fieldError);
         }
 
-        if (!userService.isSamePassword(signupForm.getPassword(), signupForm.getPasswordConfirmation())) {
+        if (!passwordService.isSamePassword(signupForm.getPassword(), signupForm.getPasswordConfirmation())) {
             FieldError fieldError = new FieldError(bindingResult.getObjectName(), "passwordConfirmation",
                     "パスワードが一致しません");
             bindingResult.addError(fieldError);

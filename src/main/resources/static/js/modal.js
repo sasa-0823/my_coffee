@@ -15,11 +15,9 @@ function openModal(button) {
   const memo = button.getAttribute("data-memo");
 
   const commentUrl = button.getAttribute("data-comment-url");
-  const link = [[@{commentUrl}]];
 
   const comment = button.getAttribute("data-comment");
   const commentData = JSON.parse(comment);
-  const commentForm = document.getElementById("commentForm");
 
   console.log(commentUrl);
 
@@ -50,7 +48,9 @@ function openModal(button) {
   document.getElementById("filter").innerText = filter ? filter : "未入力";
   document.getElementById("memo").innerText = memo ? memo : "未入力";
   
-  commentForm.setAttribute('th:action', '@{' + (commentUrl) + '}');
+  
+  const commentForm = document.getElementById("commentForm");
+  commentForm.setAttribute('action', '@{' + (commentUrl) + '}');
 
 };
 

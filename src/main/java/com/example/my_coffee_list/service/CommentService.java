@@ -26,22 +26,34 @@ public class CommentService {
     return commentRepository.findByRecipe(recipe);
   }
 
-  // コメントを追加
-  public void addComment(User user, Integer recipeid, String NewComment){
-    Comment comment = new Comment();
-    Recipe recipe = recipeRepository.findById(recipeid).orElse(null);
-
-    comment.setUser(user);
-    comment.setRecipe(recipe);
-    comment.setText(NewComment);
-
-    commentRepository.save(comment);
+  //特定のコメントを取得して更新
+  public void updataComment(Integer commentId, String comment){
+    Comment updataComment = commentRepository.findById(commentId).orElse(null);
+    
+    updataComment.setText(comment);
   }
 
-  // 特定のユーザーのコメントを削除
+  // コメントを追加
+  public void addComment(User user, Integer recipeid, String NewComment){
+    Comment addComment = new Comment();
+    Recipe recipe = recipeRepository.findById(recipeid).orElse(null);
+
+    addComment.setUser(user);
+    addComment.setRecipe(recipe);
+    addComment.setText(NewComment);
+
+    commentRepository.save(addComment);
+  }
+
+  // 特定のユーザーのコメントを削除(アカウント削除時外部キー制約対策)
   public void deleteUserComment(User user){
     List<Comment> comments = commentRepository.findByUser(user);
     commentRepository.deleteAll(comments);
+  }
+
+  //コメント削除
+  public void deleteComment(Integer Id){
+    commentRepository.deleteById(Id);
   }
 
 }
