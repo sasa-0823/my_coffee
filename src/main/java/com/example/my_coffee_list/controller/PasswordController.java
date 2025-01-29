@@ -54,6 +54,7 @@ public class PasswordController {
         }
 
         User user = userDetailsImpl.getUser();
+        System.out.println(user);
         model.addAttribute("user", user);
 
         return "updataPw";
@@ -63,25 +64,24 @@ public class PasswordController {
     @PostMapping("/updataPw")
     public String updataPw(@ModelAttribute @Validated UpdataPwForm updataPwForm,
             BindingResult bindingResult,
-            UserDetailsImpl userDetailsImpl,
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             HttpServletRequest httpServletRequest,
-            Model model) {
+            RedirectAttributes redirectAttributes) {
         if (!passwordService.isSamePassword(updataPwForm.getAfterPw(), updataPwForm.getAfterPwConfirmation())) {
-            FieldError fieldError = new FieldError(bindingResult.getObjectName(), "afterPwConfirmation",
-                    "パスワードが間違えています");
+            FieldError fieldError = new FieldError(bindingResult.getObjectName(), "afterPwConfirmation", "パスワードが間違えています");
             bindingResult.addError(fieldError);
         }
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("updataPwForm", updataPwForm);
-            return "updataPw";
+            redirectAttributes.addFlashAttribute("updataPwForm", updataPwForm);
+            return "redirect:/updataPw";
         }
 
         User user = userDetailsImpl.getUser();
         String password = updataPwForm.getAfterPw();
         passwordService.registPw(password, user);
 
-        return "index";
+        return "redirect:/";
     }
 
 }
