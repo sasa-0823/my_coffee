@@ -31,6 +31,11 @@
         <div th:if="${param.error}">
           <p>メールアドレスまたはパスワードが正しくありません。</p>
         </div>
+
+        <div th:if="${resetPwMessage}">
+          <p th:text="${resetPwMessage}"></p>
+        </div>
+
       </div>
 
       <form class="form_body" th:action="@{/login}" method="post">
@@ -39,17 +44,18 @@
           <p>e-mail</p>
           <input type="text" name="username" id="username" autocomplete="email" placeholder="メールアドレス" autofocus>
         </div>
-        
+
         <div class="form_box">
           <p>password</p>
-          <input type="password" name="password" id="password" autocomplete="current-password" placeholder="パスワード" value="Password">
+          <input type="password" name="password" id="password" autocomplete="current-password" placeholder="パスワード"
+            value="Password">
         </div>
 
         <button type="submit">login</button>
       </form>
 
       <a th:href="@{/signup}">新規登録はこちら</a>
-      <a href="">パスワードを忘れた方はこちら</a>
+      <a th:href="@{/resetPw}">パスワードを忘れた方はこちら</a>
 
     </div>
   </div>

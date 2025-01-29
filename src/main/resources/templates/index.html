@@ -5,12 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/message.css">
   <title>ホーム - BrewShare</title>
 </head>
 
 <body>
-  <header th:replace= "~{/htmlComponent/header :: header}"></header>
-  
+  <header th:replace="~{/htmlComponent/header :: header}"></header>
+
+  <div class="messageContent">
+    <span th:text="${message}"></span>
+  </div>
+
   <main>
 
     <h3>ユーザー名</h3>
@@ -18,7 +23,7 @@
 
     <h5>【recipe一覧】</h5>
 
-    <div class="menu_list" th:replace = "~{/htmlComponent/RecipeList :: recipeList}">
+    <div class="menu_list" th:replace="~{/htmlComponent/RecipeList :: recipeList}">
 
   </main>
 

@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class UpdataPwForm {
     @NotBlank(message = "現在のパスワードを入力してください")
-    private String beforePw;
+    private String beforePw;  // これが影響を受けていた
 
     @NotBlank(message = "更新するパスワードを入力してください")
     @Length(min = 8, message = "パスワードは８文字以上入力してください")
@@ -20,3 +20,4 @@ public class UpdataPwForm {
     @NotBlank(message = "更新するパスワード(確認用)を入力してください")
     private String afterPwConfirmation;
 }
+

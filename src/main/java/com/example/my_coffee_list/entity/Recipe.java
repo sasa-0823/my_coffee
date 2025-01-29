@@ -58,7 +58,7 @@ public class Recipe {
   @Column(name = "memo")
   private String memo;
 
-  @Column(name = "is_view")
+  @Column(name = "is_view")  //未読有でtrue
   private boolean isView;
 
   @Column(name = "created_at", insertable = false, updatable = false)

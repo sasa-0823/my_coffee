@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/header.css">
+  <title th:text="'「' + ${searchName} + '」の検索結果 - BrewShare'"></title>
+</head>
+
+<body>
+  
+  <main>
+
+    <h3>パスワード再設定メールを送る</h3>
+
+    <h5>メールアドレス</h5>
+    <form th:action="@{/resetPw}" method="post">
+        <p th:if="${message}" th:text="${message}" style="color: tomato;"></p>
+        <input type="text" name="email">
+        <button type="submit">送信</button>
+    </form>
+    
+  </main>
+
+</body>
+
+</html>

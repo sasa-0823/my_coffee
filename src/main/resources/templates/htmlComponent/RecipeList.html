@@ -40,6 +40,9 @@
             <input type="button" id="delete" value="削除">
           </a>
 
+          <span th:if="${rl.isSameUser && !rl.isView}" style="color: lightblue;">コメントはありません</span>
+          <span th:if="${rl.isSameUser && rl.isView}" style="color: tomato;">コメントがあります</span>
+
           <a th:href="@{/RecipeDetails/{rlId}(rlId = ${rl.id})}">
             <input type="button" id="delete" value="詳細確認">
           </a>

@@ -26,16 +26,18 @@ public class CommentController {
   
   // コメント追加
   @PostMapping("/Comment/{recipeId}")
-  public String addComment(RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, @PathVariable("recipeId") Integer recipeId, @RequestParam("newComment") String comment,  HttpServletRequest request) {
+  public String addComment(RedirectAttributes redirectAttributes,
+  @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
+  @PathVariable("recipeId") Integer recipeId,
+  @RequestParam("newComment") String comment, 
+  HttpServletRequest request) {
     User user = userDetailsImpl.getUser();
-    commentService.addComment(user, recipeId, comment);
+    commentService.addComment(user, recipeId, comment, userDetailsImpl);
     redirectAttributes.addFlashAttribute("message", "コメントしました");
     String resUrl = request.getHeader("Referer");
-    System.out.println(resUrl);
     return "redirect:" + resUrl;
   }
 
-  
   // コメント編集
   @GetMapping("editComment/{CommentId}")
   public String editComment(@PathVariable("commentId") Integer commentId, @RequestParam("editComment") String comment, HttpServletRequest request){

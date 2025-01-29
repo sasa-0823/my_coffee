@@ -23,7 +23,6 @@ import com.example.my_coffee_list.service.RecipeService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-
 @Controller
 public class RecipeController {
   final RecipeService recipeService;
@@ -39,17 +38,17 @@ public class RecipeController {
   public String createRecipe(Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
     User user = userDetailsImpl.getUser();
     model.addAttribute("user", user);
-    
+
     if (model.containsAttribute("recipeForm")) {
       // Flash Attributes から渡された recipeForm をそのまま使用
       RecipeForm recipeForm = (RecipeForm) model.getAttribute("recipeForm");
       model.addAttribute("recipeForm", recipeForm);
-  } else {
+    } else {
       // recipeForm が存在しない場合、新しいインスタンスを作成して追加
       model.addAttribute("recipeForm", new RecipeForm());
-  }
+    }
 
-  return "createRecipe";
+    return "createRecipe";
   }
 
   // レシピ登録--->エラーが無ければホームに遷移
@@ -76,7 +75,8 @@ public class RecipeController {
 
   // レシピ編集画面へ遷移
   @GetMapping("/edit/{recipeId}/{userId}")
-  public String editRecipe(@PathVariable("recipeId") Integer recipeId, @PathVariable("userId") Integer userId, RecipeForm recipeForm,
+  public String editRecipe(@PathVariable("recipeId") Integer recipeId, @PathVariable("userId") Integer userId,
+      RecipeForm recipeForm,
       @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
     // レシピを作った本人以外はホームへ遷移(URL直打ち対策)
     if (userId == userDetailsImpl.getUser().getId()) {
@@ -96,7 +96,8 @@ public class RecipeController {
   @PostMapping("/updataRecipe/{recipeId}/{userId}")
   public String updataRecipe(@ModelAttribute @Validated RecipeForm recipeForm, BindingResult bindingResult,
       HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes,
-      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, @PathVariable("recipeId") Integer recipeId, @PathVariable("userId")Integer userId) {
+      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, @PathVariable("recipeId") Integer recipeId,
+      @PathVariable("userId") Integer userId) {
 
     if (bindingResult.hasErrors()) {
       redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.recipeForm", bindingResult);
@@ -114,30 +115,34 @@ public class RecipeController {
     }
   }
 
-  //レシピを削除
+  // レシピを削除
   @GetMapping("/delete/{recipeId}/{userId}")
-  public String getMethodName(@PathVariable("recipeId") Integer recipeId, @PathVariable("userId") Integer userId, RecipeForm recipeForm,
-  @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
+  public String getMethodName(@PathVariable("recipeId") Integer recipeId, @PathVariable("userId") Integer userId,
+      RecipeForm recipeForm,
+      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
     // レシピを作った本人以外はホームへ遷移(URL直打ち対策)
-    if (userId == userDetailsImpl.getUser().getId()){
+    if (userId == userDetailsImpl.getUser().getId()) {
       recipeService.deleteRecipe(recipeId);
     }
-      return "redirect:/";
+    return "redirect:/";
   }
-  
+
   // レシピの詳細確認（コメントも併せて表示）
   @GetMapping("/RecipeDetails/{resipeId}")
-  public String recipeDetails(@PathVariable("resipeId") Integer recipeId, Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+  public String recipeDetails(@PathVariable("resipeId") Integer recipeId, Model model,
+      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
     Recipe recipe = recipeService.SearchRecipeForId(recipeId);
     List<Comment> commentList = commentService.getCommenListforRecipe(recipe);
-    for (Comment comment : commentList){
+
+    for (Comment comment : commentList) {
       User commentUser = comment.getUser();
       comment.setSameUser(commentService.checkCommentUser(commentUser, userDetailsImpl));
     }
 
+    recipeService.recipeView(recipe, userDetailsImpl); //レシピ登録者が閲覧することで通知を消す
     model.addAttribute("recipe", recipe);
     model.addAttribute("commentList", commentList);
-      return "recipeDetails";
+    return "recipeDetails";
   }
-  
+
 }

@@ -1,6 +1,7 @@
 package com.example.my_coffee_list.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,25 +25,36 @@ import jakarta.servlet.http.HttpServletRequest;
 public class PasswordController {
     private final UserService userService;
     private final PasswordService passwordService;
+    private final PasswordEncoder passwordEncoder;
 
-    public PasswordController(UserService userService, PasswordService passwordService) {
+    public PasswordController(UserService userService, PasswordService passwordService,
+            PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordService = passwordService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @GetMapping("/resetPw")
+    public String resetPwPage() {
+        return "resetPw";
     }
 
     // パスワード再設定(仮パスワード送信)
-    @GetMapping("/resetPw/{email}")
-    public String resetPw(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+    @PostMapping("/resetPw/{email}")
+    public String forgetPwUsersNewPw(@RequestParam("email") String email,
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request) {
         if (userService.selectUserForEmail(email) != null) {
             String name = userService.selectUserForEmail(email).getName();
             String newPw = passwordService.randomPw(8);
             passwordService.sendNewPw(newPw, email, name);
             passwordService.registPw(newPw, email);
-            redirectAttributes.addFlashAttribute("Message", "仮パスワードをメールにて送信しました。");
+            redirectAttributes.addFlashAttribute("resetPwMessage", "仮パスワードをメールにて送信しました。");
             return "redirect:/";
         } else {
-            redirectAttributes.addFlashAttribute("Message", "メールアドレスが存在しません。");
-            return "redirect:/";
+            redirectAttributes.addFlashAttribute("message", "メールアドレスが存在しません。");
+            String resUrl = request.getHeader("Referer");
+            return "redirect:" + resUrl;
         }
     }
 
@@ -66,15 +78,25 @@ public class PasswordController {
             BindingResult bindingResult,
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             HttpServletRequest httpServletRequest,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes,
+            Model model) {
+
+        if (!passwordEncoder.matches(updataPwForm.getBeforePw(), userDetailsImpl.getPassword())) {
+            FieldError fieldError = new FieldError(bindingResult.getObjectName(), "beforePw", "パスワードが違います");
+            bindingResult.addError(fieldError);
+        }
+
         if (!passwordService.isSamePassword(updataPwForm.getAfterPw(), updataPwForm.getAfterPwConfirmation())) {
-            FieldError fieldError = new FieldError(bindingResult.getObjectName(), "afterPwConfirmation", "パスワードが間違えています");
+            FieldError fieldError = new FieldError(bindingResult.getObjectName(), "afterPwConfirmation",
+                    "新規パスワードと確認用パスワードが違います");
             bindingResult.addError(fieldError);
         }
 
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("updataPwForm", updataPwForm);
-            return "redirect:/updataPw";
+            User user = userDetailsImpl.getUser();
+            model.addAttribute("user", user);
+            model.addAttribute("updataPwForm", updataPwForm);
+            return "updataPw";
         }
 
         User user = userDetailsImpl.getUser();

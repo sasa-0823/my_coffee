@@ -21,21 +21,19 @@
 
     <form class="form_body" enctype="multipart/form-data" th:action="@{/updataPw}" th:object="${updataPwForm}" method="post">
 
-      <div class="form_box">
+      <div class="form_box" style="color: yellowgreen;">
         <label for="beforePw">現在のパスワード:必須</label>
         <div th:if="${#fields.hasErrors('beforePw')}" th:errors="*{beforePw}"></div>
         <input type="password" th:field="*{beforePw}" placeholder="現在のパスワード">
       </div>
 
-      <div class="form_box">
+      <div class="form_box" style="color: lightblue;">
         <label for="afterPw">新しいパスワード:必須</label>
         <div th:if="${#fields.hasErrors('afterPw')}" th:errors="*{afterPw}"></div>
         <input type="password" th:field="*{afterPw}" placeholder="新しいパスワード">
       </div>
 
-      <p th:if="${#fields.hasErrors('afterPwConfirmation')}" th:errors="*{afterPwConfirmation}"></p>
-
-      <div class="form_box">
+      <div class="form_box" style="color: tomato;">
         <label for="afterPwConfirmation">新しいパスワード(確認用):必須</label>
         <div th:if="${#fields.hasErrors('afterPwConfirmation')}" th:errors="*{afterPwConfirmation}"></div>
         <input type="password" th:field="*{afterPwConfirmation}" placeholder="新しいパスワード">

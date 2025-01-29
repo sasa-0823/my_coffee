@@ -22,20 +22,20 @@ public class CommentService {
     this.recipeRepository = recipeRepository;
   }
 
-  //特定のレシピのコメントを取得
-  public List<Comment> getCommenListforRecipe(Recipe recipe){
+  // 特定のレシピのコメントを取得
+  public List<Comment> getCommenListforRecipe(Recipe recipe) {
     return commentRepository.findByRecipe(recipe);
   }
 
-  //特定のコメントを取得して更新
-  public void updataComment(Integer commentId, String comment){
+  // 特定のコメントを取得して更新
+  public void updataComment(Integer commentId, String comment) {
     Comment updataComment = commentRepository.findById(commentId).orElse(null);
-    
+
     updataComment.setText(comment);
   }
 
   // コメントを追加
-  public void addComment(User user, Integer recipeid, String NewComment){
+  public void addComment(User user, Integer recipeid, String NewComment, UserDetailsImpl userDetailsImpl) {
     Comment addComment = new Comment();
     Recipe recipe = recipeRepository.findById(recipeid).orElse(null);
 
@@ -43,22 +43,27 @@ public class CommentService {
     addComment.setRecipe(recipe);
     addComment.setText(NewComment);
 
+    if (!(recipe.getUser().equals(userDetailsImpl.getUser()))) {
+      recipe.setView(true);
+    }
+
+    recipeRepository.save(recipe);
     commentRepository.save(addComment);
   }
 
   // 特定のユーザーのコメントを削除(アカウント削除時外部キー制約対策)
-  public void deleteUserComment(User user){
+  public void deleteUserComment(User user) {
     List<Comment> comments = commentRepository.findByUser(user);
     commentRepository.deleteAll(comments);
   }
 
-  //コメント削除
-  public void deleteComment(Integer Id){
+  // コメント削除
+  public void deleteComment(Integer Id) {
     commentRepository.deleteById(Id);
   }
 
   // ログインユーザーとコメントをしたユーザーが同じかチェック
   public Boolean checkCommentUser(User user, UserDetailsImpl userDetailsImpl) {
     return user.getId().equals(userDetailsImpl.getUser().getId());
-}
+  }
 }

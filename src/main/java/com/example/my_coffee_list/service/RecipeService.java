@@ -16,6 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class RecipeService {
 
+  // レシピフォームの値をレシピに登録
   public void saveFormDataToRecipe(Recipe recipe, RecipeForm recipeForm, UserDetailsImpl userDetailsImpl) {
 
     Bean bean = beanService.beanSearch(recipeForm.getName());
@@ -31,6 +32,7 @@ public class RecipeService {
     recipe.setDripper(recipeForm.getDoripper());
     recipe.setFilter(recipeForm.getFilter());
     recipe.setMemo(recipeForm.getMemo());
+    recipe.setView(false); // falseで未読無し
 
     recipeRepository.save(recipe);
   }
@@ -61,8 +63,7 @@ public class RecipeService {
   // レシピを作成したユーザーとログインしているユーザーが同じかチェック
   public boolean checkUser(User user, UserDetailsImpl userDetailsImpl) {
     return user.getId().equals(userDetailsImpl.getUser().getId());
-}
-
+  }
 
   // フォームから入力した値を受け取りレシピを登録(新規登録用)
   public void saveRecipe(RecipeForm recipeForm, UserDetailsImpl userDetailsImpl) {
@@ -115,6 +116,16 @@ public class RecipeService {
   public void deleteUsersRecipe(User user) {
     List<Recipe> recipes = recipeRepository.findByUser(user);
     recipeRepository.deleteAll(recipes);
+  }
+
+  // レシピの詳細を開いたときにviewの状態をfalseにする(既読検出)
+  public void recipeView(Recipe recipe, UserDetailsImpl userDetailsImpl) {
+
+    if (recipe.getUser().equals(userDetailsImpl.getUser())) {
+      System.out.println("a");
+      recipe.setView(false);
+      recipeRepository.save(recipe);
+    }
   }
 
 }

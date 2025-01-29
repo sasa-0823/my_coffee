@@ -1,6 +1,7 @@
 package com.example.my_coffee_list.service;
 
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.my_coffee_list.entity.User;
@@ -10,9 +11,11 @@ import com.example.my_coffee_list.repository.UserRepository;
 public class PasswordService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public PasswordService(UserRepository userRepository) {
+    public PasswordService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // 確認用のパスワードが１回目入力のパスワードと一致しているか
@@ -41,7 +44,7 @@ public class PasswordService {
         }
     }
 
-    // 新しいメールアドレスを送信
+    // 新しいパスワードを送信
     public void sendNewPw(String password, String email, String name) {
 
         String senderAddress = "sasahara.yukio.08@gmail.com";
@@ -58,16 +61,16 @@ public class PasswordService {
 
     }
 
-    // 新しいパスワードをDBに保存
+    // 新しいパスワードをDBに保存(メールアドレスが分からないユーザー用)
     public void registPw(String password, String email) {
         User user = userRepository.findByEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
 
-    // 新しいパスワードをDBに保存
+    // 新しいパスワードをDBに保存(pwを再設定したいユーザー用)
     public void registPw(String password, User user) {
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
 }

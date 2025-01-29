@@ -56,10 +56,10 @@ public class UserController {
     public String deleteAccount(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl){
       User user = userDetailsImpl.getUser();
       //ユーザーのコンテンツを削除(外部キー制約の為)
-      recipeService.deleteUsersRecipe(user);
       commentService.deleteUserComment(user);
       favoriteService.deleteUserFavorite(user);
       verificationTokenService.deleteUserToken(user);
+      recipeService.deleteUsersRecipe(user);
 
       // ユーザーの認証を有効から無効に変更
       // 再登録出来るようにメールアドレスを変更(メールアドレスはユニークな為)
@@ -67,10 +67,11 @@ public class UserController {
       UUID uuid = UUID.randomUUID();
       String lockString = uuid.toString();
       user.setEmail(lockString);
-      userService.changeUser(user);  //メールアドレスをランダム値に変更
+      user.setImg(lockString);
+      userService.changeUser(user);  //メールアドレスとユーザアイコンの名前をランダム値に変更
       
 
-      return "redirect:/logout";
+      return "redirect:/login";
       
     }
   
