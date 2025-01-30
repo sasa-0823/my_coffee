@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.my_coffee_list.entity.User;
@@ -35,7 +36,7 @@ public class UserController {
   }
 
   // ユーザー名変更
-  @GetMapping("/changeName")
+  @PostMapping("/changeName")
   public String changeName(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
       @RequestParam("editName") String name, HttpServletRequest request) {
     String editName = name;

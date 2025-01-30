@@ -46,7 +46,7 @@
     
     <div class="modal" id="modal" style="display: none;">
       
-      <form th:action="@{/changeName}" method="get">
+      <form th:action="@{/changeName}" method="post">
         <button onclick="closeModal()" id="closeModal">&times;</button>
         <input type="text" name="editName" id="editName" th:value="${user.name}">
         <button type="submit">更新</button>

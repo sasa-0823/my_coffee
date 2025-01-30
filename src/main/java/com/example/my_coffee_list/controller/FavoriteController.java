@@ -2,8 +2,8 @@ package com.example.my_coffee_list.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.my_coffee_list.security.UserDetailsImpl;
 import com.example.my_coffee_list.service.FavoriteService;
@@ -20,7 +20,7 @@ public class FavoriteController {
   }
 
   // お気に入り登録 <--> お気に入り削除
-  @GetMapping("/Favorite/{recipeId}")
+  @PostMapping("/Favorite/{recipeId}")
   public String favToggle(@PathVariable("recipeId") Integer recipeId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, HttpServletRequest request) {
 
     Integer userId = userDetailsImpl.getUser().getId();

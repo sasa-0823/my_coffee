@@ -40,107 +40,32 @@
             <input type="button" id="delete" value="削除">
           </a>
 
+          <!-- コメントの通知 -->
           <span th:if="${rl.isSameUser && !rl.isView}" style="color: lightblue;">コメントはありません</span>
           <span th:if="${rl.isSameUser && rl.isView}" style="color: tomato;">コメントがあります</span>
-
+          
+          <!-- レシピの詳細表示ボタン -->
           <a th:href="@{/RecipeDetails/{rlId}(rlId = ${rl.id})}">
             <input type="button" id="delete" value="詳細確認">
           </a>
-
           
+          <!-- ブックマーク表示切替 -->
+          <form th:if="${!rl.isSameUser && rl.isFav}" th:action="@{/Favorite/{rlId}(rlId=${rl.id})}" method="post" recipeData="${rl.id}">
+            <input type="submit" id="FavTrue_${rl.id}" value="fav中" style="background-color: tomato;">
+          </form>
 
-          
+          <form th:if="${!rl.isSameUser && !rl.isFav}" th:action="@{/Favorite/{rlId}(rlId=${rl.id})}" method="post">
+            <input type="submit" id="FavFalse_${rl.id}" value="favなし" style="background-color: lightblue;">
+          </form>
 
-          <a th:if="${!rl.isSameUser && rl.isFav}" th:href="@{/Favorite/{rlId}(rlId = ${rl.id})}">
-            <input type="button" id="FavTrue_${rl.id}" value="fav中" style="background-color: tomato;">
-          </a>
+          <button id="ajax${rl.id}" recipeData="${rl.id}">fav中</button>
 
-          <a th:if="${!rl.isSameUser && !rl.isFav}" th:href="@{/Favorite/{rlId}(rlId = ${rl.id})}">
-            <input type="button" id="FavFalse_${rl.id}" value="favなし" style="background-color: lightblue; ">
-          </a>
 
         </li>
       </div:block>
     </ul>
-
-    <!-- ここからモーダル -->
-    <div id="modal" class="model" style="display: none;">
-      <div class="modelHeader">
-        <h2>レシピ詳細</h2>
-      </div>
-      <div class="modelContent">
-        <table>
-          <tr>
-            <th>豆の名前</th>
-            <td id="name"></td>
-          </tr>
-          <tr>
-            <th>焙煎度</th>
-            <td id="roast"></td>
-          </tr>
-          <tr>
-            <th>粗度</th>
-            <td id="grindSize"></td>
-          </tr>
-          <tr>
-            <th>豆の重さ</th>
-            <td id="beansWeight"></td>
-          </tr>
-          <tr>
-            <th>水の量</th>
-            <td id="waterVolume"></td>
-          </tr>
-          <tr>
-            <th>水の温度</th>
-            <td id="waterTemp"></td>
-          </tr>
-          <tr>
-            <th>蒸らし温度</th>
-            <td id="steamingTime"></td>
-          </tr>
-          <tr>
-            <th>ドリッパー</th>
-            <td id="dripper"></td>
-          </tr>
-          <tr>
-            <th>フィルター</th>
-            <td id="filter"></td>
-          </tr>
-          <tr>
-            <th>メモ</th>
-            <td id="memo"></td>
-          </tr>
-        </table>
-
-        <input type="button" value="閉じる" id="modelClose" onclick="closeModal()">
-      </div>
-
-      <div id="comment">
-
-        <div id="commentList">
-          <!-- ここにコメントを表示（model.jsより挿入） -->
-          <!-- <div class="commentHeader">
-            <img th:src="" alt="ユーザーアイコン">
-            <span>ユーザー名</span>
-          </div>
-
-          <div class="content">
-            <span th:text=""></span>
-          </div> -->
-        </div>
-
-        <form id="commentForm" method="post" th:action="@{/}">
-          <input type="text" name="newComment" required>
-          <button>コメントする</button>
-        </form>
-      </div>
-
-
-    </div>
-
-
-    <script src="/js/modal.js"></script>
-    <script src="/js/colorToggre.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/js/fav.js"></script>
   </div>
 
   </main>
