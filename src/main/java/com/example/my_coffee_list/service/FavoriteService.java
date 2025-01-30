@@ -48,6 +48,15 @@ public class FavoriteService {
     }
   }
 
+  // ログインユーザーが特定のレシピのお気に入り状況を確認
+  public Boolean checkFavforUser(Integer recipeId, Integer userId){
+    User user = userRepository.findById(userId).orElse(null);
+    Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
+    
+    return favoriteRepository.existsByUserAndRecipe(user, recipe);
+
+  }
+
   // レシピ毎にお気に入りしているかチェック
   public Favorite searchFavRecipe(Recipe recipe) {
     Favorite searchedFav = favoriteRepository.findByRecipe(recipe).orElse(null);
