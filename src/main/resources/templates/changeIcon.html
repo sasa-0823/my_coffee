@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/header.css">
+  <title>プロフィール画像アップロード- BrewShare</title>
+</head>
+
+<body>
+
+  <!-- headerを挿入 -->
+  <header th:replace="~{/htmlComponent/header :: header}"></header>
+
+  <main>
+    <h3>ユーザー名</h3>
+    <h3 th:text="${user.name}"></h3>
+
+    <h5>プロフィール画像アップロード</h5>
+
+    <div class="menu">
+      <form class="iconImg" th:action="@{/changeIcon}" method="post" enctype="multipart/form-data">
+        <div class="formHead">
+          <img th:src="@{/user_icon/{img}(img=${user.img})}" id="preview" alt="ユーザーアイコン" width="150">
+          <input name="editImg" id="input_img" type="file" accept="image/jpeg, image/png" required>
+        </div>
+
+        <div class="formMain">
+          <button type="submit">新しい画像をアップロードする</button>
+          <button onclick="history.back()">キャンセル</button>
+        </div>
+      </form>
+
+  </main>
+  <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>
+  <script src="/js/img_preview.js"></script>
+
+</body>
+
+</html>

@@ -138,7 +138,7 @@ public class mainController {
     return "favorite";
   }
 
-  // mypageに遷移
+  // マイページに遷移
   @GetMapping("/mypage")
   public String mypage(Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
     User user = userDetailsImpl.getUser();

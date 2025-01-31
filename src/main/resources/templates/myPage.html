@@ -20,12 +20,14 @@
     <h5>【マイページ】</h5>
 
     <div class="menu">
-
-      <img th:src="@{/user_icon/{img}(img=${user.img})}" alt="ユーザーアイコン">
+      <div class="iconImg">
+        <img th:src="@{/user_icon/{img}(img=${user.img})}" id="preview" alt="ユーザーアイコン" width="150">
+        <a th:href="@{/changeIcon}">アイコンを更新</a>
+      </div>
 
       <div class="content">
         <span id="userName" th:text="${user.name}"></span>
-        <button onclick="editUserName()">ユーザー名編集</button>
+        <button id="openModal">ユーザー名編集</button>
       </div>
 
       <div class="content">
@@ -38,16 +40,18 @@
 
       <div class="content">
         <span>アカウント削除</span>
-        <a th:href="@{/deleteAccount}"><button>削除</button></a>
+        <a th:href="@{/deleteAccount}">
+          <button>削除</button>
+        </a>
       </div>
 
     </div>
 
-    
+    <!-- 名前更新モーダル -->
     <div class="modal" id="modal" style="display: none;">
-      
+
       <form th:action="@{/changeName}" method="post">
-        <button onclick="closeModal()" id="closeModal">&times;</button>
+        <button id="closeModal">&times;</button>
         <input type="text" name="editName" id="editName" th:value="${user.name}">
         <button type="submit">更新</button>
       </form>
@@ -55,16 +59,17 @@
     </div>
 
   </main>
+  <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>
+  <script src="/js/img_preview.js"></script>
   <script>
-    const modal = document.getElementById("modal");
+    // 名前更新用モーダル
+    $("#openModal").on("click", function () {
+      $("#modal").show();
+    })
 
-    const editUserName = () => {
-      modal.style.display = "block";
-    }
-
-    const closeModal = () => {
-      modal.style.display = "none";
-    }
+    $("#closeModal").on("click", function () {
+      $("#modal").hide();
+    })
   </script>
 
 </body>

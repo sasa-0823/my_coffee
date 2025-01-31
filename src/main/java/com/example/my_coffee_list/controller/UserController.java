@@ -4,9 +4,11 @@ import java.util.UUID;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.security.UserDetailsImpl;
@@ -47,9 +49,25 @@ public class UserController {
       user.setName(editName);
       userService.changeUser(user); //ユーザー情報書き換え
     }
-    
     return "redirect:" + resUrl;
+  }
 
+  // ユーザーアイコン更新画面へ遷移
+  @GetMapping("/changeIcon")
+  public String editUserIcon(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model){
+    User user = userDetailsImpl.getUser();
+    model.addAttribute("user", user);
+    return "changeIcon";
+  }
+
+  // ユーザーアイコン更新
+  @PostMapping("/changeIcon")
+  public String editUserIconRegist(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, @RequestParam("editImg") MultipartFile img){
+
+    User user = userDetailsImpl.getUser();
+    userService.updateIcon(user, img);
+
+    return "redirect:/mypage";
   }
 
   // ユーザー削除
