@@ -34,11 +34,9 @@ public class FavoriteService {
     Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
 
     if (favoriteRepository.existsByUserAndRecipe(user, recipe)) {
-      System.out.println("削除");
       Favorite favorite = favoriteRepository.findByUserAndRecipe(user, recipe);
       favoriteRepository.delete(favorite);
     } else {
-      System.out.println("追加");
       Favorite favorite = new Favorite();
 
       favorite.setUser(user);
