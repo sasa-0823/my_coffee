@@ -2,8 +2,10 @@ package com.example.my_coffee_list.controller;
 
 import java.util.Map;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,8 +38,8 @@ public class FavoriteController {
   //   return "redirect:" + resUrl;
   // }
 
-  @PostMapping("/Favorite/{recipeId}")
-  public ResponseEntity<Map<String, String>> favInfoToView(@PathVariable("recipeId") Integer recipeId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, HttpServletRequest request) {
+  @GetMapping("/Favorite/{recipeId}")
+  public ResponseEntity<Map<String, Boolean>> favInfoToView(@PathVariable("recipeId") Integer recipeId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, HttpServletRequest request) {
 
     Integer userId = userDetailsImpl.getUser().getId();
 
@@ -46,10 +48,11 @@ public class FavoriteController {
 
     // viewにお気に入り状況を返す(fav:true / notfav:false)
     boolean fovEnable = favoriteService.checkFavforUser(recipeId, userId);
-    String favString = String.valueOf(fovEnable);
     
     //キーを付けてjson形式に
-      return ResponseEntity.ok(Map.of("isFav", favString));
+      return ResponseEntity.ok()
+      .contentType(MediaType.APPLICATION_JSON)
+      .body(Map.of("isFav", fovEnable));
     
   }
 

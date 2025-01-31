@@ -1,12 +1,15 @@
 
 $(function () {
+  var token = $("meta[name='_csrf']").attr("content");
+  var header = $("meta[name='_csrf_header']").attr("content");
 
-  $("form[id^='fov_']").on("submit", function (e) {
+  $("form[id^='fov_']").on("submit", function (e, xhr, options) {
+    xhr.setRequestHeader(header, token);
     e.preventDefault();
     console.log($(this).attr("action"));
     $.ajax({
       url: $(this).attr("action"),
-      method: "post",
+      method: "get",
       cache: false,
       dataType: "json"
     }).done(function (favEnabled) {

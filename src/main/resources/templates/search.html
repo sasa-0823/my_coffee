@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   <link rel="stylesheet" href="css/header.css">
   <title th:text="'「' + ${searchName} + '」の検索結果 - BrewShare'"></title>
 </head>
@@ -11,15 +13,15 @@
 <body>
 
   <!-- headerを挿入 -->
-  <header th:replace= "~{/htmlComponent/header :: header}"></header>
-  
+  <header th:replace="~{/htmlComponent/header :: header}"></header>
+
   <main>
     <h3>ユーザー名</h3>
     <h3 th:text="${user.name}"></h3>
 
     <h5>【recipe一覧】</h5>
 
-    <div class="menu_list" th:replace = "~{/htmlComponent/RecipeList :: recipeList}">
+    <div class="menu_list" th:replace="~{/htmlComponent/RecipeList :: recipeList}">
     </div>
   </main>
 

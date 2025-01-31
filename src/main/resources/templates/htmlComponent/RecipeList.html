@@ -50,11 +50,11 @@
           </a>
           
           <!-- ブックマーク表示切替 -->
-          <form id="fov_${rl.id}" th:if="${!rl.isSameUser && rl.isFav}" th:action="@{/Favorite/{rlId}(rlId=${rl.id})}" method="post" recipeData="${rl.id}">
+          <form id="fov_${rl.id}" th:if="${!rl.isSameUser && rl.isFav}" th:action="@{/Favorite/{rlId}(rlId=${rl.id})}" method="get" recipeData="${rl.id}">
             <input type="submit" id="FavTrue_${rl.id}" value="fav中" style="background-color: tomato;">
           </form>
 
-          <form id="fov_${rl.id}" th:if="${!rl.isSameUser && !rl.isFav}" th:action="@{/Favorite/{rlId}(rlId=${rl.id})}" method="post" recipeData="${rl.id}">
+          <form id="fov_${rl.id}" th:if="${!rl.isSameUser && !rl.isFav}" th:action="@{/Favorite/{rlId}(rlId=${rl.id})}" method="get" recipeData="${rl.id}">
             <input type="submit" id="FavFalse_${rl.id}" value="favなし" style="background-color: lightblue;">
           </form>
 
