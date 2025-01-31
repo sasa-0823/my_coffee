@@ -1,5 +1,8 @@
 package com.example.my_coffee_list.controller;
 
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +37,7 @@ public class FavoriteController {
   // }
 
   @PostMapping("/Favorite/{recipeId}")
-  public Boolean favInfoToView(@PathVariable("recipeId") Integer recipeId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, HttpServletRequest request) {
+  public ResponseEntity<Map<String, String>> favInfoToView(@PathVariable("recipeId") Integer recipeId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, HttpServletRequest request) {
 
     Integer userId = userDetailsImpl.getUser().getId();
 
@@ -42,8 +45,12 @@ public class FavoriteController {
     favoriteService.favToggle(recipeId, userId);
 
     // viewにお気に入り状況を返す(fav:true / notfav:false)
-    boolean forEnable = favoriteService.checkFavforUser(recipeId, userId);
-    return forEnable;
+    boolean fovEnable = favoriteService.checkFavforUser(recipeId, userId);
+    String favString = String.valueOf(fovEnable);
+    
+    //キーを付けてjson形式に
+      return ResponseEntity.ok(Map.of("isFav", favString));
+    
   }
 
     

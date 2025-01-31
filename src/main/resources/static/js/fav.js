@@ -1,21 +1,23 @@
 
 $(function () {
 
-  const rlId = $("button").attr("recipeData");
-
-  $(`#ajax + rlId`).on("click", function () {
+  $("form[id^='fov_']").on("submit", function (e) {
+    e.preventDefault();
+    console.log($(this).attr("action"));
     $.ajax({
-      url: "/Favorite/" + rlId,
+      url: $(this).attr("action"),
       method: "post",
-      cache    : false,
+      cache: false,
       dataType: "json"
     }).done(function (favEnabled) {
       // fav:true / notfav:false
-      $("form").attr("if", favEnabled)
+      console.log(favEnabled.isfav);
+      $("this").attr("if", favEnabled.isFav)
 
     })
       .fail(function (favEnabled) {
-        alert('送信エラー');
+        console.log(favEnabled.isfav);
+        alert('送信エラー' + favEnabled);
       })
   })
 });
