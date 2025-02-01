@@ -1,6 +1,7 @@
 package com.example.my_coffee_list.service;
 
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ public class PasswordService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JavaMailSender javaMailSender;
 
-    public PasswordService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public PasswordService(UserRepository userRepository, PasswordEncoder passwordEncoder, JavaMailSender javaMailSender) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.javaMailSender = javaMailSender;
     }
 
     // 確認用のパスワードが１回目入力のパスワードと一致しているか
@@ -57,7 +60,8 @@ public class PasswordService {
         mailMessage.setFrom(senderAddress);
         mailMessage.setTo(recipientAddress);
         mailMessage.setSubject(subject);
-        mailMessage.setText(name + "様/n" + message + "/n" + sendPw);
+        mailMessage.setText(name + "様\n" + message + "\n" + sendPw);
+        javaMailSender.send(mailMessage);
 
     }
 
