@@ -40,7 +40,7 @@ public class PasswordController {
     }
 
     // パスワード再設定(仮パスワード送信)
-    @PostMapping("/resetPw/{email}")
+    @PostMapping("/resetPw")
     public String forgetPwUsersNewPw(@RequestParam("email") String email,
             RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
@@ -49,8 +49,8 @@ public class PasswordController {
             String newPw = passwordService.randomPw(8);
             passwordService.sendNewPw(newPw, email, name);
             passwordService.registPw(newPw, email);
-            redirectAttributes.addFlashAttribute("resetPwMessage", "仮パスワードをメールにて送信しました。");
-            return "redirect:/";
+            redirectAttributes.addFlashAttribute("message", "仮パスワードをメールにて送信しました。");
+            return "redirect:/login";
         } else {
             redirectAttributes.addFlashAttribute("message", "メールアドレスが存在しません。");
             String resUrl = request.getHeader("Referer");

@@ -78,14 +78,15 @@ public class UserService {
   public void updateIcon(User user, MultipartFile img) {
     try {
       // 保存する画像ファイルのパスを指定
-      String saveFile = user.getEmail() + ".jpg"; // 画像ファイル名
+      var saveFile = user.getEmail() + ".jpg"; // 画像ファイル名
       Path imgFilePath = Path.of(imgFolder, saveFile); // 保存先パス
 
       // 画像の保存
       Files.copy(img.getInputStream(), imgFilePath, StandardCopyOption.REPLACE_EXISTING);
       
-      // DBに画像名を保存
+      // DBに画像Pathを保存
       user.setImg(saveFile);
+      userRepository.save(user);
 
     } catch (IOException e) {
       throw new RuntimeException("ファイル保存中にエラーが発生: " + e.getMessage(), e);

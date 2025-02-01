@@ -45,13 +45,14 @@ public class mainController {
     // view表示用
     for (Recipe recipe : recipeList) {
       User recipeUser = recipe.getUser();
+      User favUser = userDetailsImpl.getUser();
+
       // レシピ作成ユーザーとログインユーザーが同じがチェック
       recipe.setSameUser(recipeService.checkUser(recipeUser, userDetailsImpl));
 
-      User favUser = userDetailsImpl.getUser();
       // レシピをお気に入りしているユーザーとログインユーザーが同じがチェック
       Favorite searchedFavRecipe = favoriteService.searchFavRecipe(recipe);
-      recipe.setFav(favoriteService.checkFavRecipe(searchedFavRecipe, favUser));
+      recipe.setFav(favoriteService.FavStatusForRecipe(searchedFavRecipe, favUser));
 
       // レシピにコメントを付ける
       List<Comment> commentList = commentService.getCommenListforRecipe(recipe);
@@ -83,7 +84,7 @@ public class mainController {
         User favUser = userDetailsImpl.getUser();
         // レシピをお気に入りしているユーザーとログインユーザーが同じがチェック
         Favorite searchedFavRecipe = favoriteService.searchFavRecipe(recipe);
-        recipe.setFav(favoriteService.checkFavRecipe(searchedFavRecipe, favUser));
+        recipe.setFav(favoriteService.FavStatusForRecipe(searchedFavRecipe, favUser));
 
         // レシピにコメントを付ける
         List<Comment> commentList = commentService.getCommenListforRecipe(recipe);
@@ -124,7 +125,7 @@ public class mainController {
       // レシピをお気に入りしているユーザーとログインユーザーが同じがチェック(お気に入り表示切替)
       User favUser = userDetailsImpl.getUser();
       Favorite searchedFavRecipe = favoriteService.searchFavRecipe(recipe);
-      recipe.setFav(favoriteService.checkFavRecipe(searchedFavRecipe, favUser));
+      recipe.setFav(favoriteService.FavStatusForRecipe(searchedFavRecipe, favUser));
 
       // レシピにコメントを付ける
       List<Comment> commentList = commentService.getCommenListforRecipe(recipe);

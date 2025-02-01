@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.security.UserDetailsImpl;
@@ -62,10 +63,16 @@ public class UserController {
 
   // ユーザーアイコン更新
   @PostMapping("/changeIcon")
-  public String editUserIconRegist(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, @RequestParam("editImg") MultipartFile img){
+  public String editUserIconRegist(
+    @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
+    @RequestParam("editImg") MultipartFile img,
+    RedirectAttributes redirectAttributes){
 
     User user = userDetailsImpl.getUser();
     userService.updateIcon(user, img);
+    
+    // User afterUser = userDetailsImpl.getUser();
+    // redirectAttributes.addFlashAttribute("user", afterUser);
 
     return "redirect:/mypage";
   }
