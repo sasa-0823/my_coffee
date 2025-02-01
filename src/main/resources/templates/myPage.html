@@ -21,7 +21,7 @@
 
     <div class="menu">
       <div class="iconImg">
-        <img th:src="@{/user_icon/{img}(img=${user.img})}" id="preview" alt="ユーザーアイコン" width="150">
+        <img th:src="@{/user_icon/{img}(img=${user.img})}" id="preview" alt="ユーザーアイコン" width="150" />
         <a th:href="@{/changeIcon}">アイコンを更新</a>
       </div>
 
@@ -59,7 +59,7 @@
     </div>
 
   </main>
-  <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>
+  <script id="iconImg" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>
   <script src="/js/img_preview.js"></script>
   <script>
     // 名前更新用モーダル
@@ -70,7 +70,21 @@
     $("#closeModal").on("click", function () {
       $("#modal").hide();
     })
+
   </script>
+
+  <script>
+    function reloadUserIcon() {
+      let imgElement = document.getElementById("preview");
+      let imgUrl = imgElement.src.split("?")[0]; // 元のURLを取得
+      imgElement.src = imgUrl + "?t=" + new Date().getTime(); // タイムスタンプを付与して更新
+    }
+
+    document.addEventListener("DOMContentLoaded", reloadUserIcon);
+  </script>
+
+
+
 
 </body>
 

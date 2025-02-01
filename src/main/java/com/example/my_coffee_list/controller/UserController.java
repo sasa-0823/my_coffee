@@ -48,14 +48,14 @@ public class UserController {
     if (userDetailsImpl.getUsername() != editName) {
       User user = userDetailsImpl.getUser();
       user.setName(editName);
-      userService.changeUser(user); //ユーザー情報書き換え
+      userService.changeUser(user); // ユーザー情報書き換え
     }
     return "redirect:" + resUrl;
   }
 
   // ユーザーアイコン更新画面へ遷移
   @GetMapping("/changeIcon")
-  public String editUserIcon(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model){
+  public String editUserIcon(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
     User user = userDetailsImpl.getUser();
     model.addAttribute("user", user);
     return "changeIcon";
@@ -66,40 +66,38 @@ public class UserController {
   public String editUserIconRegist(
     @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
     @RequestParam("editImg") MultipartFile img,
-    RedirectAttributes redirectAttributes){
-
+    RedirectAttributes redirectAttributes) throws InterruptedException{
+      try {
     User user = userDetailsImpl.getUser();
     userService.updateIcon(user, img);
-    
-    // User afterUser = userDetailsImpl.getUser();
-    // redirectAttributes.addFlashAttribute("user", afterUser);
-
+    Thread.sleep(500);
     return "redirect:/mypage";
+  }catch(InterruptedException e){
+    return "redirect:/mypage";
+    }
   }
 
   // ユーザー削除
   @GetMapping("/deleteAccount")
-    public String deleteAccount(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl){
-      User user = userDetailsImpl.getUser();
-      //ユーザーのコンテンツを削除(外部キー制約の為)
-      commentService.deleteUserComment(user);
-      favoriteService.deleteUserFavorite(user);
-      verificationTokenService.deleteUserToken(user);
-      recipeService.deleteUsersRecipe(user);
+  public String deleteAccount(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+    User user = userDetailsImpl.getUser();
+    // ユーザーのコンテンツを削除(外部キー制約の為)
+    commentService.deleteUserComment(user);
+    favoriteService.deleteUserFavorite(user);
+    verificationTokenService.deleteUserToken(user);
+    recipeService.deleteUsersRecipe(user);
 
-      // ユーザーの認証を有効から無効に変更
-      // 再登録出来るようにメールアドレスを変更(メールアドレスはユニークな為)
-      user.setEnabled(false);
-      UUID uuid = UUID.randomUUID();
-      String lockString = uuid.toString();
-      user.setEmail(lockString);
-      user.setImg(lockString);
-      userService.changeUser(user);  //メールアドレスとユーザアイコンの名前をランダム値に変更
-      
+    // ユーザーの認証を有効から無効に変更
+    // 再登録出来るようにメールアドレスを変更(メールアドレスはユニークな為)
+    user.setEnabled(false);
+    UUID uuid = UUID.randomUUID();
+    String lockString = uuid.toString();
+    user.setEmail(lockString);
+    user.setImg(lockString);
+    userService.changeUser(user); // メールアドレスとユーザアイコンの名前をランダム値に変更
 
-      return "redirect:/login";
-      
-    }
-  
-  
+    return "redirect:/login";
+
+  }
+
 }
