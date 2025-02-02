@@ -1,0 +1,134 @@
+body {
+    animation: fadeOut 1s ease-in-out;
+    background-color: #fefefe;
+    font-family: Calibri, Noto Sans JP, Helvetica Neue, Arial, Hiragino Kaku Gothic ProN, Hiragino Sans, Meiryo, sans-serif;
+    width: 80%;
+    margin: auto;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 0;
+        transform: translateY(1%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+h2 {
+    width: 70%;
+    margin: 50px auto;
+    padding-bottom: 30px;
+    text-align: left;
+    border-bottom: #1010102d 1px solid;
+}
+
+a {
+    text-decoration: none;
+    color: #101010;
+}
+
+button {
+    padding: 5px;
+    background-color: #fcfcfc;
+    color: #101010;
+    border: #1010102d 1px solid;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #2727279d;
+    color: #fcfcfc;
+    transition: 0.3s;
+}
+
+.mypageMenu {
+    width: 60%;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mypageMenu>* {
+    margin-bottom: 30px;
+    /* 後で消す */
+    /* border: #1010102d 1px solid; */
+}
+
+.contents {
+    width: 100%;
+    margin: auto;
+}
+
+/* アイコン */
+.iconImg {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 80px;
+    border-bottom: 1px solid #1010102d;
+}
+
+img {
+    justify-self: center;
+    min-width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.iconImg>a>button {
+    padding: 5px;
+    background-color: #fcfcfc;
+    color: #101010;
+    border: #1010102d 1px solid;
+}
+
+.iconImg>a>button:hover {
+    background-color: #333333;
+    color: #fcfcfc;
+    transition: 0.3s;
+}
+
+/* ユーザー名以降 */
+.content {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-left: 5%;
+    margin-top: 30px;
+}
+
+.content>span {
+    width: 150px;
+}
+
+.buttonFlex {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-around;
+}
+
+.deleteButton{
+    background-color: rgba(255, 99, 71, 0.89);
+    color: #444;
+}
+
+.deleteButton:hover{
+    background-color: rgba(255, 145, 125, 0.89);
+    color: #101010;
+    transition: 0.3s;
+}
+

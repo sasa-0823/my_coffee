@@ -89,7 +89,6 @@ public class mainController {
         // レシピにコメントを付ける
         List<Comment> commentList = commentService.getCommenListforRecipe(recipe);
         List<String> commentTexts = commentList.stream().map(Comment::getText).collect(Collectors.toList());
-        System.out.println(commentTexts);
         recipe.setComment(commentTexts);
       }
       
@@ -109,8 +108,8 @@ public class mainController {
   // お気に入りレシピ確認ページへ遷移
   @GetMapping("/Favorite")
   public String favPageView(Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
-    List<Favorite> favRecipePage = favoriteService.selectedFavPage(userDetailsImpl.getUser());
 
+    List<Favorite> favRecipePage = favoriteService.selectedFavPage(userDetailsImpl.getUser());
     User user = userDetailsImpl.getUser();
     List<Recipe> recipeList = favRecipePage.stream()
         .map(Favorite::getRecipe)

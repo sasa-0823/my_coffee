@@ -6,7 +6,7 @@
 }
 
 .menu ul {
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -52,7 +52,8 @@
 
 /* レシピ追加 */
 .addRecipe {
-  flex: 0.2;
+  width: 110px;
+  margin: 0px 10px;
 }
 
 .registRecipe {

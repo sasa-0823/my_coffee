@@ -27,6 +27,7 @@ img {
     margin: 30px auto;
     padding: 20px 100px;
     background-color: rgba(235, 235, 235, 0.514);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
 
 .listBox,

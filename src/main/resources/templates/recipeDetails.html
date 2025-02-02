@@ -11,7 +11,8 @@
     rel="stylesheet">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" th:href="@{/css/header.css}">
+  <link rel="stylesheet" th:href="@{/css/editRecipe.css}">
   <title>レシピ編集 - BrewShare</title>
 </head>
 
@@ -22,9 +23,11 @@
 
   <main>
     <div class="content">
+
       <div class="Top">
         <h2>レシピ詳細</h2>
       </div>
+
       <div class="list">
         <ul>
           <li>
@@ -65,45 +68,50 @@
           </li>
           <li>
             <span>メモ</span>
-            <span th:text="${recipe.memo}"></span>
+            <span class="memo" th:text="${recipe.memo}"></span>
           </li>
         </ul>
 
         <button type="button" onclick="history.back()">戻る</button>
       </div>
+    </div>
 
-      <div id="comment">
+    <div id="comment">
 
-        <div th:each="comment:${commentList}" style="background-color: lightblue;">
+      <div th:each="comment:${commentList}" style="background-color: lightblue;">
 
-          <div class="header">
-            <img th:src="@{/user_icon/{img}(img=${comment.user.img})}" alt="ユーザーアイコン">
-            <span>ユーザー名</span>
-            <span th:text="${comment.user.name}"></span>
+        <div class="commentList">
+          <img th:src="@{/user_icon/{img}(img=${comment.user.img})}" alt="ユーザーアイコン">
 
-            <a th:if="${comment.sameUser}" th:href="@{/deleteComment/{commentid}(commentid = ${comment.id})}">
-              <input type="button" value="削除">
-            </a>
+          <div class="commenttext">
+            <div class="commentUser">
+              <span th:text="${comment.user.name}"></span>
 
+              <a th:if="${comment.sameUser}" th:href="@{/deleteComment/{commentid}(commentid = ${comment.id})}">
+                <input type="button" value="削除">
+              </a>
+            </div>
+
+            <div class="content">
+              <span th:text="${comment.text}"></span>
+            </div>
           </div>
 
-          <div class="content">
-            <span th:text="${comment.text}"></span>
-          </div>
         </div>
 
-        <form id="commentForm" method="post" th:action="@{/Comment/{recipeId}(recipeId=${recipe.id})}">
-          <textarea name="newComment" required></textarea>
-          <button type="submit">コメント投稿</button>
-        </form>
       </div>
 
+      <form id="commentForm" method="post" th:action="@{/Comment/{recipeId}(recipeId=${recipe.id})}">
+        <textarea name="newComment" required></textarea>
+        <button type="submit">コメント投稿</button>
+      </form>
     </div>
+
+
     </div>
 
 
     <script src="/js/modal.js"></script>
-    <script src="/js/colorToggre.js"></script>
     </div>
 
   </main>

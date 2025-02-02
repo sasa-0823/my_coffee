@@ -11,9 +11,8 @@
     rel="stylesheet">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  <link rel="stylesheet" href="css/searchPage.css">
   <link rel="stylesheet" href="css/header.css">
-  <link rel="stylesheet" href="css/recipeList.css">
+  <link rel="stylesheet" href="css/mypage.css">
   <title>マイページ- BrewShare</title>
 </head>
 
@@ -23,35 +22,37 @@
   <header th:replace="~{/htmlComponent/header :: header}"></header>
 
   <main>
-    <h3>ユーザー名</h3>
-    <h3 th:text="${user.name}"></h3>
 
-    <h5>【マイページ】</h5>
+    <h2>マイページ</h2>
 
-    <div class="menu">
+    <div class="mypageMenu">
+
       <div class="iconImg">
         <img th:src="@{/user_icon/{img}(img=${user.img})}" id="preview" alt="ユーザーアイコン" width="150" />
-        <a th:href="@{/changeIcon}">アイコンを更新</a>
+        <a th:href="@{/changeIcon}"><button>アイコンを更新</button></a>
       </div>
 
-      <div class="content">
-        <span id="userName" th:text="${user.name}"></span>
-        <button id="openModal">ユーザー名編集</button>
-      </div>
+      <div class="contents">
 
-      <div class="content">
-        <span th:text="'メールアドレス:' + ${user.email}"></span>
-      </div>
+        <div class="content">
+          <span>ユーザー名</span>
+          <span id="userName" th:text="${user.name}"></span>
+          <button id="openModal">編集</button>
+        </div>
 
-      <div class="content">
-        <a th:href="@{/updataPw}">パスワード再設定</a>
-      </div>
+        <div class="content">
+          <span>メールアドレス</span>
+          <span th:text="${user.email}"></span>
+        </div>
 
-      <div class="content">
-        <span>アカウント削除</span>
-        <a th:href="@{/deleteAccount}">
-          <button>削除</button>
-        </a>
+        <div class="content buttonFlex">
+          <a th:href="@{/updataPw}">
+            <button>パスワード再設定</button>
+          </a>
+          <a th:href="@{/deleteAccount}">
+            <button class="deleteButton">アカウント削除</button>
+          </a>
+        </div>
       </div>
 
     </div>
@@ -71,6 +72,7 @@
   <script id="iconImg" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>
   <script src="/js/img_preview.js"></script>
   <script>
+
     // 名前更新用モーダル
     $("#openModal").on("click", function () {
       $("#modal").show();

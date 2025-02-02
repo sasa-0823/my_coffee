@@ -12,6 +12,7 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/updataPw.css">
   <title>パスワード再設定 - BrewShare</title>
 </head>
 
@@ -21,29 +22,32 @@
   <header th:replace="~{/htmlComponent/header :: header}"></header>
 
   <main>
-    <h3>ユーザー名</h3>
-    <h3 th:text="${user.name}"></h3>
 
-    <h5>【パスワード再設定】</h5>
+    <h2>パスワード再設定</h2>
+    <div class="border"></div>
 
-    <form class="form_body" enctype="multipart/form-data" th:action="@{/updataPw}" th:object="${updataPwForm}" method="post">
+    <form class="form_body" enctype="multipart/form-data" th:action="@{/updataPw}" th:object="${updataPwForm}"
+      method="post">
 
-      <div class="form_box" style="color: yellowgreen;">
-        <label for="beforePw">現在のパスワード:必須</label>
+      <div class="form_box">
+        <label for="beforePw">現在のパスワード</label>
+        <span>必須</span>
         <div th:if="${#fields.hasErrors('beforePw')}" th:errors="*{beforePw}"></div>
-        <input type="password" th:field="*{beforePw}" placeholder="現在のパスワード">
+        <input type="password" th:field="*{beforePw}">
       </div>
 
-      <div class="form_box" style="color: lightblue;">
-        <label for="afterPw">新しいパスワード:必須</label>
+      <div class="form_box">
+        <label for="afterPw">新しいパスワード</label>
+        <span>必須</span>
         <div th:if="${#fields.hasErrors('afterPw')}" th:errors="*{afterPw}"></div>
-        <input type="password" th:field="*{afterPw}" placeholder="新しいパスワード">
+        <input type="password" th:field="*{afterPw}">
       </div>
 
-      <div class="form_box" style="color: tomato;">
-        <label for="afterPwConfirmation">新しいパスワード(確認用):必須</label>
+      <div class="form_box">
+        <label for="afterPwConfirmation">新しいパスワード(確認用)</label>
+        <span>必須</span>
         <div th:if="${#fields.hasErrors('afterPwConfirmation')}" th:errors="*{afterPwConfirmation}"></div>
-        <input type="password" th:field="*{afterPwConfirmation}" placeholder="新しいパスワード">
+        <input type="password" th:field="*{afterPwConfirmation}">
       </div>
 
       <button type="submit">登録</button>
