@@ -19,6 +19,7 @@ import com.example.my_coffee_list.entity.Recipe;
 import com.example.my_coffee_list.entity.User;
 import com.example.my_coffee_list.security.UserDetailsImpl;
 import com.example.my_coffee_list.service.CommentService;
+import com.example.my_coffee_list.service.FavoriteService;
 import com.example.my_coffee_list.service.RecipeService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,11 +27,13 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class RecipeController {
   final RecipeService recipeService;
+  final FavoriteService favoriteService;
   final CommentService commentService;
 
-  public RecipeController(RecipeService recipeService, CommentService commentService) {
+  public RecipeController(RecipeService recipeService, CommentService commentService, FavoriteService favoriteService) {
     this.recipeService = recipeService;
     this.commentService = commentService;
+    this.favoriteService = favoriteService;
   }
 
   // レシピ登録画面に遷移
@@ -122,6 +125,8 @@ public class RecipeController {
       @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
     // レシピを作った本人以外はホームへ遷移(URL直打ち対策)
     if (userId == userDetailsImpl.getUser().getId()) {
+      favoriteService.deleteFavoriteForRecipe(recipeId);
+      
       recipeService.deleteRecipe(recipeId);
     }
     return "redirect:/";
@@ -131,6 +136,8 @@ public class RecipeController {
   @GetMapping("/RecipeDetails/{resipeId}")
   public String recipeDetails(@PathVariable("resipeId") Integer recipeId, Model model,
       @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+
+    User user = userDetailsImpl.getUser();
     Recipe recipe = recipeService.SearchRecipeForId(recipeId);
     List<Comment> commentList = commentService.getCommenListforRecipe(recipe);
 
@@ -142,6 +149,8 @@ public class RecipeController {
     recipeService.recipeView(recipe, userDetailsImpl); //レシピ登録者が閲覧することで通知を消す
     model.addAttribute("recipe", recipe);
     model.addAttribute("commentList", commentList);
+    model.addAttribute("user", user);
+
     return "recipeDetails";
   }
 

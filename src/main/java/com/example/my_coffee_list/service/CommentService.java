@@ -62,6 +62,8 @@ public class CommentService {
     commentRepository.deleteById(Id);
   }
 
+  // 特定のレシピのコメント削除(レシピ削除時の外部キー制約の為)
+
   // ログインユーザーとコメントをしたユーザーが同じかチェック
   public Boolean checkCommentUser(User user, UserDetailsImpl userDetailsImpl) {
     return user.getId().equals(userDetailsImpl.getUser().getId());

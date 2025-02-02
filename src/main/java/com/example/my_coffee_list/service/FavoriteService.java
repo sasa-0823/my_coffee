@@ -78,4 +78,9 @@ public class FavoriteService {
     favoriteRepository.deleteAll(favorites);
   }
 
+  // 特定のレシピのお気に入り削除(レシピ削除時の外部キー制約の為)
+  public void deleteFavoriteForRecipe(Integer recipeId){
+    List<Favorite> favorites = favoriteRepository.findByRecipeId(recipeId);
+    favoriteRepository.deleteAll(favorites);
+  }
 }

@@ -4,28 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/header.css">
-  <title>ログイン / MyCoffee</title>
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
+  <link rel="stylesheet" href="/css/loginForm.css">
+  <title>ログイン - Share Brew</title>
 </head>
 
 <body>
-  <div class="login_page">
-    <div class="login_img">
+  <div class="loginPage">
+
+    <!-- <div class="loginImg">
       <img src="/img/login_page.png" alt="ログインページ写真">
-    </div>
+    </div> -->
 
-    <div class="login_form">
+    <div class="loginForm">
 
-      <div class="form_head">
-        <img src="" alt="ログインフォームロゴ">
-        <span>sign in</span>
+      <div class="info">
+
+        <h1>Share Brew</h1>
 
         <div th:if="${authSuccessMessage}">
           <p th:text="${authSuccessMessage}"></p>
         </div>
 
-        <p th:if="${message}" th:text="${message}" style="color: tomato;"></p>
-
+        <div>
+          <p th:if="${message}" th:text="${message}"></p>
+        </div>
 
         <div th:if="${param.loggedOut}">
           <p>ログアウトしました</p>
@@ -41,24 +44,22 @@
 
       </div>
 
-      <form class="form_body" th:action="@{/login}" method="post">
+      <form class="formBody" th:action="@{/login}" method="post">
 
-        <div class="form_box">
-          <p>e-mail</p>
-          <input type="text" name="username" id="username" autocomplete="email" placeholder="メールアドレス" autofocus>
-        </div>
+        <input type="text" name="username" id="username" autocomplete="email" placeholder=" e-mail" autofocus>
 
-        <div class="form_box">
-          <p>password</p>
-          <input type="password" name="password" id="password" autocomplete="current-password" placeholder="パスワード"
-            value="Password">
-        </div>
+        <input type="password" name="password" id="password" autocomplete="current-password" placeholder=" パスワード" value="Password">
+
+        <a th:href="@{/resetPw}">パスワードを忘れた方はこちら</a>
 
         <button type="submit">login</button>
+
       </form>
 
-      <a th:href="@{/signup}">新規登録はこちら</a>
-      <a th:href="@{/resetPw}">パスワードを忘れた方はこちら</a>
+      <form method="get" th:action="@{/signup}" class="newUserForm">
+        <div class="border"></div>
+        <button class="createUser" type="submit">新規登録</button>
+      </form>
 
     </div>
   </div>

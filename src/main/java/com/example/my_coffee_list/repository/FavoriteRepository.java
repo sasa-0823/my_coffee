@@ -14,5 +14,6 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
   public Boolean existsByUserAndRecipe(User user, Recipe recipe);
   public Favorite findByUserAndRecipe(User user, Recipe recipe);
   public Optional<Favorite> findByRecipe(Recipe recipe);
+  public List<Favorite> findByRecipeId(Integer id);
   public List<Favorite> findByUser(User user);
 }

@@ -60,5 +60,4 @@ public class CommentController {
     System.out.println(resUrl);
     return "redirect:" + resUrl;
   }
-
 }

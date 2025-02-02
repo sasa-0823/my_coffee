@@ -2,7 +2,7 @@
     background-color: lightblue;
     position: absolute;
     margin: 0px, auto;
-    animation: fafeOut 1.5s;
+    animation: fadeOut 1.5s;
 }
 
 @keyframes fadeOut {
