@@ -121,15 +121,16 @@ public class RecipeController {
   // レシピを削除
   @GetMapping("/delete/{recipeId}/{userId}")
   public String getMethodName(@PathVariable("recipeId") Integer recipeId, @PathVariable("userId") Integer userId,
-      RecipeForm recipeForm,
-      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
+      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, HttpServletRequest request) {
     // レシピを作った本人以外はホームへ遷移(URL直打ち対策)
     if (userId == userDetailsImpl.getUser().getId()) {
       favoriteService.deleteFavoriteForRecipe(recipeId);
-      
+      commentService.deleteCommentForRecipe(recipeId);
       recipeService.deleteRecipe(recipeId);
     }
-    return "redirect:/";
+    //元の画面に遷移
+    String resUrl = request.getHeader("Referer");
+    return "redirect:" + resUrl;
   }
 
   // レシピの詳細確認（コメントも併せて表示）

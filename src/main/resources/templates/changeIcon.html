@@ -4,6 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Potta+One&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="css/header.css">
   <title>プロフィール画像アップロード- BrewShare</title>
 </head>
@@ -14,8 +21,6 @@
   <header th:replace="~{/htmlComponent/header :: header}"></header>
 
   <main>
-    <h3>ユーザー名</h3>
-    <h3 th:text="${user.name}"></h3>
 
     <h5>プロフィール画像アップロード</h5>
 

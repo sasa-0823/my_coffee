@@ -57,7 +57,6 @@ public class CommentController {
 
     //元の画面に遷移
     String resUrl = request.getHeader("Referer");
-    System.out.println(resUrl);
     return "redirect:" + resUrl;
   }
 }
