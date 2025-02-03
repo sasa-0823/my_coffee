@@ -90,3 +90,14 @@ button:hover {
     color: #fcfcfc;
     transition: 0.3s;
 }
+
+@media (max-width:700px){
+
+    body,
+    h2,
+    .border,
+    .form_box {
+        width: 90%;
+    }
+    
+}

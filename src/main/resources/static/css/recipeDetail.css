@@ -44,7 +44,7 @@ li {
     list-style: none;
 }
 
-.list  li {
+.list li {
     display: flex;
     justify-content: space-around;
     margin: 5px 0px;
@@ -111,7 +111,7 @@ li {
     border-bottom: #1010102d 1px solid;
 }
 
-.commentUser > a {
+.commentUser>a {
     text-decoration: none;
     display: inline-block;
     margin-left: auto;
@@ -122,7 +122,7 @@ li {
     border-radius: 5px;
 }
 
-.commentUser > a:hover{
+.commentUser>a:hover {
     background-color: #101010;
     color: #fcfcfc;
 }
@@ -184,3 +184,40 @@ li {
     background-color: #333;
 }
 
+@media (max-width:700px) {
+
+    body {
+        width: 90%;
+    }
+
+    .content {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .list li span:nth-child(1) {
+        font-weight: 600;
+        width: 100px;
+    }
+
+    .list li span:nth-child(3) {
+        width: 25px;
+    }
+
+    .list li span {
+        width: 300px;
+        text-align: center;
+        font-weight: 400;
+    }
+
+    #comment {
+        width: 100%;
+    }
+
+    .commentList>img {
+        min-width: 70px;
+        height: 70px;
+        margin-right: 20px;
+    }
+
+}

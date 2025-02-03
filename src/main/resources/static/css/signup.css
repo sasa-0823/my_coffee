@@ -132,3 +132,13 @@ button:hover {
     color: #fcfcfc;
     transition: 0.3s;
 }
+
+@media (max-width:700px){
+
+    main,
+    form {
+        width: 90%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+}

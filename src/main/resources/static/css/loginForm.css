@@ -124,3 +124,23 @@ a:hover {
     color: #fcfcfc;
     transition: 0.3s;
 }
+
+@media (max-width:700px){
+
+    input {
+        width: 65%;
+    }
+
+    button {
+        width: 30%;
+    }
+
+    .createUser {
+        width: 30%;
+    }
+
+    .newUserForm>.border {
+        width: 50%;
+    }
+    
+}

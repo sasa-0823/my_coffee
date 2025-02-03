@@ -48,7 +48,7 @@ h2 {
 
 .recipeLabel {
     width: 80%;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
 }
@@ -91,4 +91,23 @@ button {
 button:hover {
     background-color: #101010;
     color: #fcfcfc;
+}
+
+@media (max-width:700px){
+
+    body {
+        width: 90%;
+    }
+
+    main form {
+        width: 100%;
+    }
+
+    h2 {
+        width: 90%;
+    }
+
+    .border {
+        width: 90%;
+    }
 }

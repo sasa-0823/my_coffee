@@ -85,6 +85,7 @@ img {
     height: 200px;
     border-radius: 50%;
     object-fit: cover;
+    margin-bottom: 20px;
 }
 
 .iconImg>a>button {
@@ -132,3 +133,40 @@ img {
     transition: 0.3s;
 }
 
+@media (max-width:700px){
+
+    body {
+        width: 90%;
+    }
+
+    main form {
+        width: 100%;
+    }
+
+    h2 {
+        width: 90%;
+        margin: 10px auto;
+        padding-bottom: 10px;
+        flex: 1;
+    }
+
+    .border {
+        width: 90%;
+    }
+
+    .mypageMenu {
+        width: 100%;
+    }
+
+    .content {
+        margin: 5px 0px;
+    }
+
+    #openbox {
+        flex: 1;
+    }
+
+    .content>span {
+        width: 100px;   
+    }
+}
