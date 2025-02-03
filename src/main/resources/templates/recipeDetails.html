@@ -12,8 +12,8 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" th:href="@{/css/header.css}">
-  <link rel="stylesheet" th:href="@{/css/editRecipe.css}">
-  <title>レシピ編集 - BrewShare</title>
+  <link rel="stylesheet" th:href="@{/css/checkRecipe.css}">
+  <title>レシピ詳細 - BrewShare</title>
 </head>
 
 <body>
@@ -33,38 +33,47 @@
           <li>
             <span>豆の名前</span>
             <span th:text="${recipe.bean.name}"></span>
+            <span></span>
           </li>
           <li>
             <span>焙煎度</span>
             <span th:text="${recipe.roast}"></span>
+            <span></span>
           </li>
           <li>
             <span>粗度</span>
             <span th:text="${recipe.grindSize}"></span>
+            <span></span>
           </li>
           <li>
             <span>豆の重さ</span>
             <span th:text="${recipe.beansWeight}"></span>
+            <span>g</span>
           </li>
           <li>
             <span>水の量</span>
             <span th:text="${recipe.waterVolume}"></span>
+            <span>ml</span>
           </li>
           <li>
             <span>水の温度</span>
             <span th:text="${recipe.waterTemp}"></span>
+            <span>℃</span>
           </li>
           <li>
             <span>蒸らし温度</span>
             <span th:text="${recipe.steamingTime}"></span>
+            <span>秒</span>
           </li>
           <li>
             <span>ドリッパー</span>
             <span th:text="${recipe.dripper}"></span>
+            <span></span>
           </li>
           <li>
             <span>フィルター</span>
             <span th:text="${recipe.filter}"></span>
+            <span></span>
           </li>
           <li>
             <span>メモ</span>
@@ -72,27 +81,31 @@
           </li>
         </ul>
 
-        <button type="button" onclick="history.back()">戻る</button>
+        
       </div>
     </div>
 
+
+    <!-- ここからコメント -->
+
     <div id="comment">
 
-      <div th:each="comment:${commentList}" style="background-color: lightblue;">
+      <div th:each="comment:${commentList}" class="oneComment">
+
+        
 
         <div class="commentList">
           <img th:src="@{/user_icon/{img}(img=${comment.user.img})}" alt="ユーザーアイコン">
 
-          <div class="commenttext">
+          <div class="commentText">
             <div class="commentUser">
               <span th:text="${comment.user.name}"></span>
-
-              <a th:if="${comment.sameUser}" th:href="@{/deleteComment/{commentid}(commentid = ${comment.id})}">
-                <input type="button" value="削除">
+              <a class="delete" th:if="${comment.sameUser}" th:href="@{/deleteComment/{commentid}(commentid = ${comment.id})}">
+                コメント削除
               </a>
             </div>
 
-            <div class="content">
+            <div class="commentmain">
               <span th:text="${comment.text}"></span>
             </div>
           </div>
@@ -101,9 +114,12 @@
 
       </div>
 
+      <div class="border"></div>
+
       <form id="commentForm" method="post" th:action="@{/Comment/{recipeId}(recipeId=${recipe.id})}">
+        <h5>コメント投稿</h5>
         <textarea name="newComment" required></textarea>
-        <button type="submit">コメント投稿</button>
+        <button type="submit">投稿</button>
       </form>
     </div>
 

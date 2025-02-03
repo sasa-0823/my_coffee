@@ -25,10 +25,12 @@ img {
     border-radius: 10px;
     width: 70%;
     margin: 30px auto;
-    padding: 20px 100px;
+    padding: 20px 50px;
     background-color: rgba(235, 235, 235, 0.514);
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
+
+/* アイコン・ユーザー名・ブックマーク・通知 */
 
 .listBox,
 .IconAndName {
@@ -37,11 +39,6 @@ img {
     margin: 2px 0px;
 }
 
-.listBox>span {
-    margin-right: 40px;
-}
-
-/* アイコン・ユーザー名・ブックマーク・通知 */
 .listHeader {
     display: flex;
     align-items: center;
@@ -111,7 +108,7 @@ img {
 
 /* レシピ情報・削除修正等UI */
 .content {
-    display: flex;    
+    display: flex;
     align-items: end;
     justify-content: center;
     padding: 15px 20px 10px 20px;
@@ -141,7 +138,7 @@ img {
     height: 2px;
     background-color: #101010;
     bottom: -1px;
-    transform: scale(0,1);
+    transform: scale(0, 1);
     transform-origin: center top;
     transition: transform 0.3s;
 }
@@ -160,9 +157,85 @@ img {
     margin-right: 20px;
 }
 
+@media (max-width:700px) {
+
+    /* リストの画像・ユーザー名 */
+    .listpackage>li {
+        width: 100%;
+        padding: 0px;
+    }
+
+    .listIcon>img {
+        min-width: 70px;
+        height: 70px;
+    }
+
+    .listName {
+        margin-left: 10px;
+        text-align: left;
+        margin: 0;
+    }
+
+    .listBox {
+        margin-left: 10px;
+        align-items: start;
+    }
+
+    .listName>span {
+        margin-left: 10px;
+        font-size: 1.2rem;
+    }
+
+    .IconAndName>span {
+        font-weight: 600;
+    }
+
+    .bookmarkIcon,
+    .notification {
+        flex: 0.1;
+    }
+
+    .notification>a>span,
+    .bookmark>button>span {
+        font-size: 2.0rem;
+    }
+
+    /* リストのコンテンツ部 */
+    .content {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+    }
+
+    .info {
+        width: 100%;
+    }
+
+    .info>.listBox {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
+
+    .info>.listBox>span {
+        margin-left: 30px;
+    }
+
+    .edit {
+        border-top: 1px solid #1010102d;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        margin: 5px;
+    }
+
+    .edit>.listBox>a {
+        padding: 5px 10px;
+        background-color: #fff;
+        color: #333;
+        border: #10101021 1px solid;
+        border-radius: 10px;
+    }
 
 
-
-
-
-
+}
