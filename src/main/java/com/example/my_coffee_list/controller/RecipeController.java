@@ -68,6 +68,7 @@ public class RecipeController {
 
     try {
       recipeService.saveRecipe(recipeForm, userDetailsImpl);
+      redirectAttributes.addFlashAttribute("message", "レシピを登録しました");
       return "redirect:/";
     } catch (Exception e) {
       redirectAttributes.addFlashAttribute("recipeForm", recipeForm);
@@ -110,6 +111,7 @@ public class RecipeController {
 
     try {
       recipeService.updataRecipe(recipeId, recipeForm, userDetailsImpl);
+      redirectAttributes.addFlashAttribute("message", "レシピを更新しました。");
       return "redirect:/";
     } catch (Exception e) {
       redirectAttributes.addFlashAttribute("recipeForm", recipeForm);
@@ -121,7 +123,7 @@ public class RecipeController {
   // レシピを削除
   @GetMapping("/delete/{recipeId}/{userId}")
   public String getMethodName(@PathVariable("recipeId") Integer recipeId, @PathVariable("userId") Integer userId,
-      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, HttpServletRequest request) {
+      @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, HttpServletRequest request, RedirectAttributes redirectAttributes) {
     // レシピを作った本人以外はホームへ遷移(URL直打ち対策)
     if (userId == userDetailsImpl.getUser().getId()) {
       favoriteService.deleteFavoriteForRecipe(recipeId);
@@ -130,6 +132,7 @@ public class RecipeController {
     }
     //元の画面に遷移
     String resUrl = request.getHeader("Referer");
+    redirectAttributes.addFlashAttribute("message", "レシピを削除しました。");
     return "redirect:" + resUrl;
   }
 

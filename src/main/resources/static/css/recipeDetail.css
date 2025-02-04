@@ -1,5 +1,5 @@
 body {
-    animation: fadeOut 1s ease-in-out;
+    animation: fadeOut 2.5s ease-in-out;
     background-color: #fefefe;
     font-family: Calibri, Noto Sans JP, Helvetica Neue, Arial, Hiragino Kaku Gothic ProN, Hiragino Sans, Meiryo, sans-serif;
     width: 80%;
@@ -9,12 +9,17 @@ body {
 @keyframes fadeOut {
     0% {
         opacity: 0;
+        transform: translateY(2%);
+    }
+
+    0% {
+        opacity: 0;
         transform: translateY(1%);
     }
 
     100% {
         opacity: 1;
-        transform: translateY(0%);
+        transform: translateY(0);
     }
 }
 

@@ -41,7 +41,7 @@ public class UserController {
   // ユーザー名変更
   @PostMapping("/changeName")
   public String changeName(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-      @RequestParam("editName") String name, HttpServletRequest request) {
+      @RequestParam("editName") String name, HttpServletRequest request, RedirectAttributes redirectAttributes) {
     String editName = name;
     String resUrl = request.getHeader("Referer");
 
@@ -50,6 +50,7 @@ public class UserController {
       user.setName(editName);
       userService.changeUser(user); // ユーザー情報書き換え
     }
+    redirectAttributes.addFlashAttribute("message", "ユーザー名を変更しました。");
     return "redirect:" + resUrl;
   }
 
@@ -71,6 +72,7 @@ public class UserController {
     User user = userDetailsImpl.getUser();
     userService.updateIcon(user, img);
     Thread.sleep(500);
+    redirectAttributes.addFlashAttribute("message", "アイコンを更新しました");
     return "redirect:/mypage";
   }catch(InterruptedException e){
     return "redirect:/mypage";

@@ -40,22 +40,28 @@ public class CommentController {
 
   // コメント編集
   @GetMapping("editComment/{CommentId}")
-  public String editComment(@PathVariable("commentId") Integer commentId, @RequestParam("editComment") String comment, HttpServletRequest request){
+  public String editComment(@PathVariable("commentId") Integer commentId,
+  @RequestParam("editComment") String comment,
+  HttpServletRequest request,
+  RedirectAttributes redirectAttributes){
     
     commentService.updataComment(commentId, comment);
     
     //元の画面に遷移
+    redirectAttributes.addFlashAttribute("message", "コメントを編集");
     String resUrl = request.getHeader("Referer");
-    System.out.println(resUrl);
     return "redirect:" + resUrl;
   }
 
   // コメント削除
   @GetMapping("/deleteComment/{commentId}")
-  public String deleteComment(@PathVariable("commentId") Integer commentId, HttpServletRequest request){
+  public String deleteComment(@PathVariable("commentId") Integer commentId,
+  HttpServletRequest request,
+  RedirectAttributes redirectAttributes){
     commentService.deleteComment(commentId);
 
     //元の画面に遷移
+    redirectAttributes.addFlashAttribute("message", "コメントを削除しました");
     String resUrl = request.getHeader("Referer");
     return "redirect:" + resUrl;
   }
