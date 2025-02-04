@@ -11,7 +11,7 @@
   justify-content: space-around;
   align-items: center;
   margin: auto;
-  padding: 10px 60px;
+  padding: 10px 20px;
   /* 確認用 */
   /* border: #101010 1px solid; */
   /* background-color: aliceblue; */
@@ -190,5 +190,13 @@ li>img {
     min-width: 40px;
     height: 40px;
     margin: 0;
+  }
+
+  .menu ul li:hover .sub_menu {
+    transform: translateX(-60%);
+  }
+
+  .sub_menu>ul>li>a::after {
+    width: 0%;
   }
 }

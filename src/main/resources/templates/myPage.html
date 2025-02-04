@@ -58,12 +58,21 @@
     </div>
 
     <!-- 名前更新モーダル -->
-    <div class="modal" id="modal" style="display: none;">
+    <div class="modal" id="modal">
 
       <form th:action="@{/changeName}" method="post">
-        <button id="closeModal">&times;</button>
-        <input type="text" name="editName" id="editName" th:value="${user.name}">
-        <button type="submit">更新</button>
+
+        <button class="closeModal">
+          <span class="material-symbols-outlined">
+            close
+          </span>
+        </button>
+
+        <div class="formInput">
+          <input type="text" name="editName" id="editName" th:value="${user.name}">
+          <button type="submit">更新</button>
+        </div>
+
       </form>
 
     </div>
@@ -76,11 +85,19 @@
     // 名前更新用モーダル
     $("#openModal").on("click", function () {
       $("#modal").show();
-    })
+    });
 
     $("#closeModal").on("click", function () {
       $("#modal").hide();
-    })
+    });
+
+    // Close modal when clicking outside of it
+    $(document).on("click", function (e) {
+      if (!$(e.target).closest("form").length && !$(event.target).is("#openModal")) {
+        $("#modal").hide();
+      }
+    });
+
 
   </script>
 

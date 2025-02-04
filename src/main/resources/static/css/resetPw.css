@@ -9,7 +9,7 @@
         opacity: 0;
         transform: translateY(1%);
     }
-    
+
     100% {
         opacity: 1;
         transform: translateY(0%);
@@ -17,11 +17,13 @@
 }
 
 main {
-    margin-top: 30px;
+    margin-top: 10px;
     padding-bottom: 50px;
     text-align: center;
     border: 2px solid #5e5e5e60;
     /* box-shadow: 2px 2px 4px gray; */
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.068);
     width: 70%;
     margin: 100px auto;
 }
@@ -58,7 +60,7 @@ form {
 }
 
 label,
-span{
+span {
     font-size: larger;
     text-align: left;
     font-weight: 600;
@@ -74,7 +76,7 @@ span {
 input,
 button {
     display: inline-block;
-    width: 60%;
+    width: 70%;
     height: 38px;
     margin: 10px;
     border: 1px solid #1010102d;
@@ -108,10 +110,32 @@ p {
     margin-left: 10px;
 }
 
-@media (max-width:700px){
+@media (max-width:700px) {
 
-    main {
-        width: 100px;
+    main,
+    form {
+        width: 90%;
+        padding: 5px;
+        margin: auto;
     }
-    
+
+    h2,
+    .border {
+        width: 90%;
+        font-size: 20px;
+    }
+
+    .border {
+        margin-bottom: 20px;
+    }
+
+    input {
+        width: 90%;
+    }
+
+    h1 {
+        margin-bottom: 50px;
+    }
+
+
 }

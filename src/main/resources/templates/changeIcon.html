@@ -11,7 +11,8 @@
     rel="stylesheet">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/chengeIcon.css">
   <title>プロフィール画像アップロード- BrewShare</title>
 </head>
 
@@ -22,7 +23,8 @@
 
   <main>
 
-    <h5>プロフィール画像アップロード</h5>
+    <h2>プロフィール画像アップロード</h2>
+    <div class="border"></div>
 
     <div class="menu">
       <form class="iconImg" th:action="@{/changeIcon}" method="post" enctype="multipart/form-data">
@@ -31,9 +33,10 @@
           <input name="editImg" id="input_img" type="file" accept="image/jpeg, image/png" required>
         </div>
 
+        <div class="border"></div>
+
         <div class="formMain">
-          <button type="submit">新しい画像をアップロードする</button>
-          <button onclick="history.back()">キャンセル</button>
+          <button type="submit">更新</button>
         </div>
       </form>
 

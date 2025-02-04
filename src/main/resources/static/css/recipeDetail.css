@@ -96,6 +96,10 @@ li {
     padding: 20px 30px;
 }
 
+.commentList>img {
+    margin-right: 20px;
+}
+
 .commentText {
     width: 100%;
     display: flex;

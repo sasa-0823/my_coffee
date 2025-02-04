@@ -12,24 +12,30 @@
 <body>
   <div class="signUp">
 
+
     <a th:href="@{/}">
       <h1>Share Brew</h1>
     </a>
+
+    <div class="formheader">
+      <h2>新規登録</h2>
+      <div class="border"></div>
+    </div>
 
     <form class="formBody" enctype="multipart/form-data" th:action="@{/signup}" th:object="${signupForm}" method="post">
 
       <div class="formBox">
 
-        <h2>新規登録</h2>
-        <div class="border"></div>
 
         <label for="img">アイコンを設定</label>
-        <input style="margin-top: 6px;" th:field="*{img}" id="input_img" type="file" accept="image/jpeg, image/png">
 
         <!-- ユーザーアイコンをプレビュー -->
         <div class="previewImg">
           <img src="/img/default_icon.jpg" id="preview" style="display: none; max-width: 40%;" alt="">
         </div>
+
+        <input style="margin-top: 6px;" th:field="*{img}" id="input_img" type="file" accept="image/jpeg, image/png">
+
 
       </div>
 
