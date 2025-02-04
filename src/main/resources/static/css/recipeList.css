@@ -4,12 +4,12 @@
 }
 
 .material-symbols-outlined {
-    color: #1010109c;
+    color: #1010102d;
 }
 
 a {
     text-decoration: none;
-    color: #101010;
+    color: #333;
 }
 
 img {
@@ -37,6 +37,21 @@ img {
     display: flex;
     align-items: center;
     margin: 2px 0px;
+}
+
+.listBox {
+    display: flex;
+    align-items: center;
+}
+
+.listBox > span {
+    color: #333;
+    margin-right: 3px;
+}
+
+.IconAndName>span {
+    color: #333;
+    font-weight: 500;
 }
 
 .listHeader {
@@ -136,7 +151,7 @@ img {
     content: "";
     width: 100%;
     height: 2px;
-    background-color: #101010;
+    background-color: #333;
     bottom: -1px;
     transform: scale(0, 1);
     transform-origin: center top;
@@ -178,7 +193,12 @@ img {
 
     .listBox {
         margin-left: 10px;
+        margin-top: 5px;
         align-items: start;
+    }
+
+    .listHeader >.listBox {
+        margin-left: 0px;
     }
 
     .listName>span {
@@ -230,11 +250,26 @@ img {
     }
 
     .edit>.listBox>a {
-        padding: 5px 10px;
-        background-color: #fff;
         color: #333;
-        border: #10101021 1px solid;
-        border-radius: 10px;
+    }
+
+    .edit >.listBox {
+        display: flex;
+        align-items: center;
+    }
+    
+    .listBox > span {
+        color: #333;
+        margin-right: 3px;
+    }
+    
+    .IconAndName>span {
+        color: #333;
+        font-weight: 500;
+    }
+
+    .edit>.listBox::after {
+        width: 0px;
     }
 
 

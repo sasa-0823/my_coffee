@@ -102,7 +102,7 @@ public class PasswordController {
         User user = userDetailsImpl.getUser();
         String password = updataPwForm.getAfterPw();
         passwordService.registPw(password, user);
-        model.addAttribute("message", "パスワードを変更しました");
+        redirectAttributes.addFlashAttribute("message", "パスワードを変更しました");
 
         return "redirect:/";
     }

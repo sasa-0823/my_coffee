@@ -52,9 +52,9 @@ public class PasswordService {
 
         String senderAddress = "sasahara.yukio.08@gmail.com";
         String recipientAddress = email;
-        String subject = "メール認証";
-        String message = "仮パスワードは以下の通りです";
-        String sendPw = password;
+        String subject = "仮パスワード送信のご連絡\n\n";
+        String message = "仮パスワードは以下の通りです。\n\n仮パスワードでログイン後、マイメニューにてパスワードの再設定を行ってください。\n";
+        String sendPw = "仮パスワード: " + password + "\n\nBrewShare";
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(senderAddress);

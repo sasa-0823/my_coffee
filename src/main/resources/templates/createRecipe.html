@@ -11,8 +11,9 @@
     rel="stylesheet">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/css/createdRecipe.css}">
+  <link rel="stylesheet" th:href="@{/css/body.css}">
+  <link rel="stylesheet" th:href="@{/css/header.css}">
+  <link rel="stylesheet" th:href="@{/css/createdRecipe.css}">
   <title>レシピ登録 - BrewShare</title>
 </head>
 
@@ -22,7 +23,7 @@
   <div th:replace="~{/htmlComponent/message :: message}"></div>
 
   <!-- headerを挿入 -->
-  <header th:replace= "~{/htmlComponent/header :: header}"></header>
+  <header th:replace="~{/htmlComponent/header :: header}"></header>
 
   <main>
     <h2>レシピ登録</h2>
@@ -66,7 +67,7 @@
         <div th:if="${#fields.hasErrors('beanWeight')}" th:errors="*{beanWeight}"></div>
         <input type="number" step="0.1" th:field="*{beanWeight}" placeholder="例) 10g" min="0">
       </div>
-      
+
       <div class="recipeLabel">
         <label for="waterValue">水の量 ( ml )</label>
         <div th:if="${#fields.hasErrors('waterValue')}" th:errors="*{waterValue}"></div>
@@ -106,7 +107,7 @@
       <button type="submit">レシピを保存</button>
 
     </form>
-    
+
   </main>
 </body>
 

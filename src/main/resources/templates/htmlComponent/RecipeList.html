@@ -43,11 +43,13 @@
             <div class="listBox notification" th:if="${rl.isSameUser}">
 
               <a th:href="@{/RecipeDetails/{rlId}(rlId = ${rl.id})}">
-                <span class="material-symbols-outlined" th:if="${rl.isSameUser && !rl.isView}" style="color:#5f6368;">chat_bubble</span>
+                <span class="material-symbols-outlined" th:if="${rl.isSameUser && !rl.isView}"
+                  style="color:#5f6368;">chat_bubble</span>
               </a>
 
               <a th:href="@{/RecipeDetails/{rlId}(rlId = ${rl.id})}">
-                <span class="material-symbols-outlined" th:if="${rl.isSameUser && rl.isView}" style="color: tomato;">mark_chat_unread</span>
+                <span class="material-symbols-outlined" th:if="${rl.isSameUser && rl.isView}"
+                  style="color: tomato;">mark_chat_unread</span>
               </a>
             </div>
 
@@ -66,7 +68,7 @@
                   <span>豆の名前</span>
                 </div>
                 <span th:text="${rl.bean.name} ?: '未入力'"></span>
-                
+
               </div>
 
               <div class="listBox">
@@ -104,20 +106,28 @@
             <div class="edit">
 
               <div class="listBox">
+                <span th:if="${rl.isSameUser}" class="material-symbols-outlined">
+                  edit_square
+                </span>
                 <a th:if="${rl.isSameUser}" th:href="@{/edit/{rlId}/{userId}(rlId = ${rl.id}, userId = ${rl.user.id})}">
                   <input type="button" value="編集">
                 </a>
               </div>
 
               <div class="listBox">
-                <a th:if="${rl.isSameUser}"
-                  th:href="@{/delete/{rlId}/{userId}(rlId = ${rl.id}, userId = ${rl.user.id})}">
+                <span th:if="${rl.isSameUser}" class="material-symbols-outlined">
+                  delete
+                </span>
+                <a th:if="${rl.isSameUser}" th:href="@{/delete/{rlId}/{userId}(rlId = ${rl.id}, userId = ${rl.user.id})}">
                   <input type="button" id="delete" value="削除">
                 </a>
               </div>
 
               <!-- レシピの詳細表示ボタン -->
               <div class="listBox">
+                <span class="material-symbols-outlined">
+                  edit_square
+                </span>
                 <a th:href="@{/RecipeDetails/{rlId}(rlId = ${rl.id})}">
                   <input type="button" id="RecipeDetail" value="レシピ詳細">
                 </a>
@@ -128,18 +138,18 @@
           </div>
 
         </li>
-        
+
       </div:block>
     </ul>
 
     <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>
     <script th:src="@{/js/fav.js}"></script>
-    
+
     <script>
-      $("#delete").click(function(){
-        if(!confirm("レシピを削除してもよろしいですか？")){
+      $("#delete").click(function () {
+        if (!confirm("レシピを削除してもよろしいですか？")) {
           return false;
-        }else{
+        } else {
           return true;
         }
       })
