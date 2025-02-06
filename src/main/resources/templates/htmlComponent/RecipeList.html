@@ -118,7 +118,8 @@
                 <span th:if="${rl.isSameUser}" class="material-symbols-outlined">
                   delete
                 </span>
-                <a th:if="${rl.isSameUser}" th:href="@{/delete/{rlId}/{userId}(rlId = ${rl.id}, userId = ${rl.user.id})}">
+                <a th:if="${rl.isSameUser}"
+                  th:href="@{/delete/{rlId}/{userId}(rlId = ${rl.id}, userId = ${rl.user.id})}">
                   <input type="button" id="delete" value="削除">
                 </a>
               </div>
@@ -126,7 +127,7 @@
               <!-- レシピの詳細表示ボタン -->
               <div class="listBox">
                 <span class="material-symbols-outlined">
-                  edit_square
+                  menu_book
                 </span>
                 <a th:href="@{/RecipeDetails/{rlId}(rlId = ${rl.id})}">
                   <input type="button" id="RecipeDetail" value="レシピ詳細">
